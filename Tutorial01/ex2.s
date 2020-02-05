@@ -25,10 +25,11 @@ main:
 
 	@ ---------------------
 
-	
-	
-	
-	
+	LDR r2, [r0, #0]; @load a[0] to r2
+	LDR r3, [r0, #4]; @load a[1] to r3
+	ADD r2, r2, r3; @r2 = r2 + r3
+	SUB r2, r2, r1; @r2 = r2 - r1
+	STR r2, [r0, #8]; @store r2 in a[2]
 	
 
 	@ ---------------------
