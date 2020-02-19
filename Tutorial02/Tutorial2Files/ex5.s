@@ -26,13 +26,18 @@ main:
 
 	@ ---------------------
 
+	MOV r5, #0;   @ j = 0
+	MOV r1, #0;   @ i = 0
 	
-	
-	
-	
-	
-	
-	
+Loop:
+	ADD r1, r1, #1; @ r1 = r1 + 1
+	CMP r1, #10;
+	BGE Exit;       @ if (r1 >= 10) then Exit 	
+
+	ADD r5, r5, r1; @ r5 = r5 + r1
+	B Loop;         @ if (r1 < 10) then Loop
+
+Exit:
 	
 	@ ---------------------
 	
