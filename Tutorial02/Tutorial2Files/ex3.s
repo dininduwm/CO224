@@ -25,12 +25,16 @@ main:
 
 	@ ---------------------
 	
+	CMP r2, r3;      @compare r2, r3
+	BGE Addition;    @if (i >= j) r5 = r0 + r1
+	SUB r5, r0, r1;  @if (i < j) r5 = r0 - r1
+	B Exit;
 
-
-
-
+Addition:
+	ADD r5, r0, r1;
 	
-	
+Exit:
+
 	@ ---------------------
 	
 	
