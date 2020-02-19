@@ -27,13 +27,20 @@ main:
 
 	@ ---------------------
 	
+	CMP r0, #5;            
+	BGT GreaterThanFive;  @ if (i>5) goto GreaterThanFive
+	CMP r0, #3;
+	BGT GreaterThanThree; @ else if (i>3) goto GreaterThanThree
+	MOV r5, #30;          @ else r5 = 30
+	B Exit;
 
-	
-	
-	
-	
-	
-	
+GreaterThanFive:
+	MOV r5, #70;          @ r5 = 70
+
+GreaterThanThree:
+	MOV r5, #55;          @ r5 = 55
+
+Exit:	
 	
 	@ ---------------------
 	
