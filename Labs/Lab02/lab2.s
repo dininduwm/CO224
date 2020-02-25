@@ -43,7 +43,7 @@ Loop1:              @ Outer Loop
 	Loop2:
 		ADD r1, r1, #1  @ j = j + 1
 		CMP r1, #15
-		BGE Exit_Inner_Loop    @ if (r2 >= 15) then Exit_Inner_Loop
+		BGE Loop1    @ if (r2 >= 15) then Exit_Inner_Loop
 
 		ADD r4, r0, r1 @ r4 = i + j
 		CMP r4, #10
@@ -54,14 +54,9 @@ Loop1:              @ Outer Loop
 		Else:
 			AND r6, r0, r1 @ r6 = i&j
 			ADD r3, r3, r6 @ r3 = r3 + r6
+
 		EndIf:
-
-		B Loop2
-
-	Exit_Inner_Loop:
-
-	B Loop1
-	
+			B Loop2
 	
 Exit:	
 	MOV r5, r3
