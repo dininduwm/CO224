@@ -36,6 +36,7 @@ main:
 
 GreaterThanFive:
 	MOV r5, #70;          @ r5 = 70
+	b Exit
 
 GreaterThanThree:
 	MOV r5, #55;          @ r5 = 55
