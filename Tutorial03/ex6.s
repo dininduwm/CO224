@@ -8,15 +8,19 @@
 
 @ ---------------------	
 fact:
-
-
-
-
-
-
-
-
-
+	//stack operations
+	mov r2, #1 @ r2 = 1
+	loop:
+		cmp r0, #1 @ loop when the ro = 1
+		bls Exit
+		mov r1, r2 @ save the value temarily for multiplication operation r1 = r2
+		mul r2, r1, r0
+		sub r0, r0, #1
+		b loop
+	Exit:
+		mov r0, r2
+	//stack oparation
+	mov pc, lr
 @ ---------------------	
 
 .global main
