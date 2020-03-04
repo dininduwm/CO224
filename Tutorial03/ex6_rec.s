@@ -8,33 +8,27 @@
 
 @ ---------------------	
 Fibonacci:
-
-	cmp r0, #2 
+	cmp r0, #1
 	bls Exit
 
-	//preserving the varibles in the stack
-	sub sp, sp, #12
-	str lr, [sp, #8]
+	//preserving the variables in the stack
+	sub sp, sp, #8
+	str lr, [sp, #4] //preserve the link register value
+	str r0, [sp, #0] // storing the r0 value
 
 	sub r0, r0, #1
-	str r0, [sp, #4] @ r0 value saved
-	bl Fibonacci
-	str r0, [sp, #0]
+	bl Fibonacci //recursively call the fibonacci function
 
-	ldr r0, [sp, #4] @ get the r0 value	
-	sub r0, r0, #1	
-	bl Fibonacci
-
+	//retriving variables preserved
 	ldr r1, [sp, #0]
-	add r0, r0, r1 @ fib(n) = fib(n-1) + fib(n-2)
-	ldr lr, [sp, #8]
-	add sp, sp, #12
-	mov pc, lr
+	ldr lr, [sp, #4]
+	add sp, sp, #8
+
+	mov r2, r0
+	mul r0, r2, r1 @ fib = n*fib(n-1)
 
 	Exit:
-		mov r0, #1
-		mov pc, lr
-
+		mov pc, lr @ put the lr address to the pc register
 @ ---------------------
 	
 	.global main

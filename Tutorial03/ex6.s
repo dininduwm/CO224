@@ -13,7 +13,7 @@ fact:
 	loop:
 		cmp r0, #1 @ loop when the ro = 1
 		bls Exit
-		mov r1, r2 @ save the value temarily for multiplication operation r1 = r2
+		mov r1, r2 @ save the value temparily for multiplication operation r1 = r2
 		mul r2, r1, r0
 		sub r0, r0, #1
 		b loop
