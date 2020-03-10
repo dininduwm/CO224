@@ -7,17 +7,35 @@
 @ Write YOUR CODE HERE	
 
 @ ---------------------	
+mod:  @ calculating the mod value
+	cmp r0, r1 @ cmp r0, r1
+	blo modNext @ if r0 > r1 
+		sub r0, r0, r1 @ r0 = r0 - r1
+		b mod          @ loop through mod
+	modNext:
+		mov pc, lr @ returning from the function
+
 gcd:
+	cmp r0, r1
+	bge next 	@ if r0 >= r1 go next
+	mov r2, r0 	@ else: exchange r0, r1
+	mov r0, r1
+	mov r1, r2
 
+	next:
+	cmp r1, #0 @ compare the smaller value with 0 (base case)
+	bne next2
+	mov pc, lr @ going back to the caller function
 
+	next2:
+	sub sp, sp, #4 @ move the stack pointer
+	str lr, [sp, #0]
+	bl mod @ taking the r0 = r0%r1
+	bl gcd @ gcd(r0, r1)
+	ldr lr, [sp, #0]
+	add sp, sp, #4 @ move the stack pointer
 
-
-
-
-
-
-
-
+	mov pc, lr
 
 @ ---------------------	
 
@@ -28,9 +46,8 @@ main:
 	sub sp, sp, #4
 	str lr, [sp, #0]
 
-	mov r4, #64 	@the value a
-	mov r5, #24 	@the value b
-	
+	mov r4, #64 	@the value a 64
+	mov r5, #24 	@the value b 24	
 
 	@ calling the mypow function
 	mov r0, r4 	@the arg1 load
@@ -53,4 +70,7 @@ main:
 
 	.data	@ data memory
 format: .asciz "gcd(%d,%d) = %d\n"
+
+@ arm-linux-gnueabi-gcc -Wall lab3_2.s -o lab3_2
+@ qemu-arm -L /usr/arm-linux-gnueabi lab3_2
 
