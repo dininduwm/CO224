@@ -10,16 +10,22 @@
 
 @ ---------------------	
 mypow:
+    mov r2, r0
+	
+	LOOP:	
+    cmp r1, #0 
+    beq EXIT_0 		@ if r1 = 0 return 1
+    cmp r1, #1
+    beq EXIT_1 		@ if r1 = 1 return r0
+    mul r0,r2,r0 	@ r0 = r0 * r2
+    sub r1, r1, #1 	@ r1 = r1 - 1
+    b LOOP
 
+	EXIT_0:
+    mov r0, #1 
 
-
-
-
-
-
-
-
-
+	EXIT_1:
+    mov pc,lr
 @ ---------------------	
 
 	.global main
@@ -55,3 +61,5 @@ main:
 	.data	@ data memory
 format: .asciz "%d^%d is %d\n"
 
+@ arm-linux-gnueabi-gcc -Wall lab3_1.s -o lab3_1
+@ qemu-arm -L /usr/arm-linux-gnueabi lab3_1
