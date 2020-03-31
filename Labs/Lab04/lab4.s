@@ -1,5 +1,5 @@
 @ ARM Assembly Example
-@	a function to find string length
+@	a function to reverse strings
 @	Call it from main
 
 
@@ -40,7 +40,7 @@ loopMain:
 
 	add r5, r5, #1
 	cmp r4, r5
-	beq exitLoopMain
+	beq exitLoopMain @ Loop until r4 == 45
 	b loopMain
 
 exitLoopMainNeg:
@@ -114,12 +114,11 @@ endLoop:
 
 
 	.data	@ data memory
-formatInpOut: .asciz "Enter the number of strings : "
-formatInpStr: .asciz "Enter input string %d:\n"
-formatInvalid: .asciz "Invalid Number\n"
-formatOut: .asciz "Output string %d is...\n"
-formatInp: .asciz "%d"
-formats: .asciz "%s"
-formatp: .asciz "%c"
-formatpLast: .asciz "%c\n"
-formatTest: .asciz "asas\n"
+formatInpOut: .asciz "Enter the number of strings : \n" @ format to preview before input a string
+formatInpStr: .asciz "Enter input string %d:\n"         @ format to preview a string
+formatInvalid: .asciz "Invalid Number\n"                @ invalid number format
+formatOut: .asciz "Output string %d is...\n"            @ format to output string
+formatInp: .asciz "%d%*c"							    @ taking the number input
+formats: .asciz "%[^\n]%*c"                             @ input a string					
+formatp: .asciz "%c"                                    @ print a char
+formatpLast: .asciz "%c\n"                              @ print a char with new line
