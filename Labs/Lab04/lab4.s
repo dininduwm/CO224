@@ -65,6 +65,10 @@ strReverse:
 	str r4, [sp, #204]	
 	str r0, [sp, #208]
 
+	@ put 0 to the sp byte before scan to avoid empty string conflict
+	mov r0, #0
+	strb r0, [sp]
+
 	@scanf for string
 	ldr	r0, =formats
 	mov	r1, sp
@@ -80,15 +84,19 @@ strReverse:
 loop: @loop to find the ending char
 	ldrb r1, [r4, #0]
 	cmp	r1, #0
-	beq	printLoop
+	beq	checkForEmptyString
 
 	add	r4, r4, #1	@ move to the next element in the char array
 	b	loop
 
+checkForEmptyString:
+	cmp r4, sp
+	ble flushBuffer	
+
 printLoop: @ loop to print the chars in reverse order
 	sub r4, r4, #1
 	cmp r4, sp
-	beq endLoop
+	ble endLoop
 
 	ldrb r1, [r4, #0] @ load the current character
 
@@ -99,14 +107,19 @@ printLoop: @ loop to print the chars in reverse order
 	b printLoop
 
 endLoop:
-
 	@ print the last character
 	ldr	r0, =formatpLast
 	ldrb r1, [r4, #0] @ load the current character
 	bl	printf
+	b stackRestore
 
+flushBuffer: @ flush the input buffer
+	bl getchar
+	ldr r0, =formatNewLine
+	bl printf @ print a new line
+
+stackRestore:
 	@ releasing the stack
-	
 	ldr lr, [sp, #200]
 	ldr r4, [sp, #204]
 	add sp, sp, #212
@@ -115,10 +128,11 @@ endLoop:
 
 	.data	@ data memory
 formatInpOut: .asciz "Enter the number of strings : \n" @ format to preview before input a string
-formatInpStr: .asciz "Enter input string %d:\n"         @ format to preview a string
+formatInpStr: .asciz "Enter the input string %d :\n"         @ format to preview a string
 formatInvalid: .asciz "Invalid Number\n"                @ invalid number format
-formatOut: .asciz "Output string %d is...\n"            @ format to output string
+formatOut: .asciz "Output string %d is : \n"            @ format to output string
 formatInp: .asciz "%d%*c"							    @ taking the number input
 formats: .asciz "%[^\n]%*c"                             @ input a string					
 formatp: .asciz "%c"                                    @ print a char
 formatpLast: .asciz "%c\n"                              @ print a char with new line
+formatNewLine: .asciz "\n"								@ print newLine
