@@ -19,11 +19,23 @@ end
 initial
 begin
     IN = 28;
-    INADDRESS = 1;
+    INADDRESS = 0;
     OUT1ADDRESS = 0;
     OUT2ADDRESS = 1;
     WRITE = 1;
     
+    CLK = 0;
+    #2 // delay of 1ns
+    CLK = 1;
+    #2 // delay of 1ns
+
+
+    IN = 38;
+    INADDRESS = 1;
+    OUT1ADDRESS = 0;
+    OUT2ADDRESS = 1;
+    WRITE = 0; //because of the write enable nothing write to the register
+     
     CLK = 0;
     #2 // delay of 1ns
     CLK = 1;

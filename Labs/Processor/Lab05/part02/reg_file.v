@@ -14,7 +14,6 @@ begin
     // write input to the in address
     if (WRITE == 1)
         registers[INADDRESS] = IN; 
-    #1 //delay for one time unit
     // writing for the outputs
     OUT1 = registers[OUT1ADDRESS]; 
     OUT2 = registers[OUT2ADDRESS];

@@ -5,16 +5,19 @@ output [7:0] RESULT; //declare the output
 
 reg [7:0] RESULT; // declare the outputs as registers
 
-always @ (DATA1 or DATA2 or SELECT)
+always @ (DATA1 or DATA2 or SELECT) // this block run if there is any change in DATA1 or DATA2 or SELECT
 begin
-    if (SELECT == 'b000)
+    case (SELECT)
+    'b000:
         RESULT = DATA2; //forward operation  
-    else if (SELECT == 'b001)
+    'b001:
         RESULT = DATA1 + DATA2; // add operation
-    else if (SELECT == 'b010)
+    'b010:
         RESULT = DATA1 & DATA2; // bitwise and operation
-    else if (SELECT == 'b011)
+    'b011:
         RESULT = DATA1 | DATA2; // bitwise or operation
+    default: RESULT = 0; //result 0 if the other cases
+    endcase
 end
     
 endmodule
