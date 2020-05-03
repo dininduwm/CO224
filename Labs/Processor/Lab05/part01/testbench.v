@@ -1,5 +1,4 @@
 `include "alu.v"
-`timescale 1ns/10ps
 
 module testBench;
 
@@ -20,22 +19,22 @@ begin
     DATA1 = 28;
     DATA2 = 38;
     SELECT = 0;
-    #1 // delay of 1ns
+    #5 // delay of 1ns
 
     DATA1 = 28;
     DATA2 = 38;
     SELECT = 1;
-    #1 // delay of 1ns
+    #5 // delay of 1ns
 
     DATA1 = 28;
     DATA2 = 38;
     SELECT = 2;
-    #1 // delay of 1ns
+    #5 // delay of 1ns
 
     DATA1 = 28;
     DATA2 = 38;
     SELECT = 3;
-    #1 // delay of 1ns
+    #5 // delay of 1ns
     
     #1
     $finish;

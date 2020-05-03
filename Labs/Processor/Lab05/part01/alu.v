@@ -9,13 +9,13 @@ always @ (DATA1 or DATA2 or SELECT) // this block run if there is any change in 
 begin
     case (SELECT)
     'b000:
-        RESULT = DATA2; //forward operation  
+        RESULT = #1 DATA2; //forward operation  
     'b001:
-        RESULT = DATA1 + DATA2; // add operation
+        RESULT = #2 DATA1 + DATA2; // add operation
     'b010:
-        RESULT = DATA1 & DATA2; // bitwise and operation
+        RESULT = #1 DATA1 & DATA2; // bitwise and operation
     'b011:
-        RESULT = DATA1 | DATA2; // bitwise or operation
+        RESULT = #1 DATA1 | DATA2; // bitwise or operation
     default: RESULT = 0; //result 0 if the other cases
     endcase
 end
