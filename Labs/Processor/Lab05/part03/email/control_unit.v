@@ -1,13 +1,3 @@
-/*
-    op codes
-    00000000 - add
-    00000001 - sub
-    00000010 - and
-    00000011 - or
-    00000100 - mov
-    00000101 - loadi
-    */
-
 module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP);
     input [7:0] OP; //input op code
     output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN; //output registers
@@ -16,7 +6,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP);
     always @ (*)
     begin
       case (OP)
-        'h00: //add
+        'h00: 
             begin
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
@@ -24,7 +14,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP);
                 aluOP = 3'b001;        //cpu op code  
             end
 
-        'h01: //sub
+        'h01: 
             begin
                 twoscompMUXSEL = 1'b1; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
@@ -32,7 +22,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP);
                 aluOP = 3'b001;        //cpu op code  
             end
 
-        'h02: //and
+        'h02: 
             begin
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
@@ -40,7 +30,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP);
                 aluOP = 3'b010;        //cpu op code  
             end
 
-        'h03: //or
+        'h03: 
             begin
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
@@ -48,7 +38,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP);
                 aluOP = 3'b011;        //cpu op code  
             end
 
-        'h04: //mov
+        'h04: 
             begin
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
@@ -56,7 +46,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP);
                 aluOP = 3'b000;        //cpu op code  
             end
 
-        'h05: //loadi
+        'h05: 
             begin
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b1;     //immediate value select mux

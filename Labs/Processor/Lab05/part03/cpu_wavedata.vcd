@@ -1,0 +1,352 @@
+$date
+	Fri May  8 11:29:04 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module testbenchCPU $end
+$var wire 32 ! INS [31:0] $end
+$var wire 8 " PC [7:0] $end
+$var reg 1 # CLK $end
+$var reg 1 $ RESET $end
+$scope module mycpu $end
+$var wire 8 % ALOP2 [7:0] $end
+$var wire 1 # CLK $end
+$var wire 32 & INS [31:0] $end
+$var wire 1 $ RESET $end
+$var wire 1 ' twoscompMUXSEL $end
+$var wire 1 ( regWRITEEN $end
+$var wire 1 ) immeMUXSEL $end
+$var wire 3 * aluOP [2:0] $end
+$var wire 8 + TWOSMUXOUT [7:0] $end
+$var wire 8 , TWOSCOMPOUT [7:0] $end
+$var wire 8 - SOURCE2 [7:0] $end
+$var wire 8 . SOURCE1 [7:0] $end
+$var wire 8 / REGOUT2 [7:0] $end
+$var wire 8 0 REGOUT1 [7:0] $end
+$var wire 8 1 OP [7:0] $end
+$var wire 8 2 DESTINATION [7:0] $end
+$var wire 8 3 ALUOUT [7:0] $end
+$var wire 8 4 ALOP1 [7:0] $end
+$var reg 8 5 PC [7:0] $end
+$scope module muximme $end
+$var wire 8 6 INPUT2 [7:0] $end
+$var wire 1 ) SELECT $end
+$var wire 8 7 INPUT1 [7:0] $end
+$var reg 8 8 RESULT [7:0] $end
+$upscope $end
+$scope module muxtwos $end
+$var wire 1 ' SELECT $end
+$var wire 8 9 INPUT2 [7:0] $end
+$var wire 8 : INPUT1 [7:0] $end
+$var reg 8 ; RESULT [7:0] $end
+$upscope $end
+$scope module myalu $end
+$var wire 8 < DATA1 [7:0] $end
+$var wire 8 = DATA2 [7:0] $end
+$var wire 3 > SELECT [2:0] $end
+$var reg 8 ? RESULT [7:0] $end
+$upscope $end
+$scope module mycu $end
+$var wire 8 @ OP [7:0] $end
+$var reg 3 A aluOP [2:0] $end
+$var reg 1 ) immeMUXSEL $end
+$var reg 1 ( regWRITEEN $end
+$var reg 1 ' twoscompMUXSEL $end
+$upscope $end
+$scope module myreg $end
+$var wire 1 # CLK $end
+$var wire 8 B IN [7:0] $end
+$var wire 3 C INADDRESS [2:0] $end
+$var wire 8 D OUT1 [7:0] $end
+$var wire 3 E OUT1ADDRESS [2:0] $end
+$var wire 8 F OUT2 [7:0] $end
+$var wire 3 G OUT2ADDRESS [2:0] $end
+$var wire 1 $ RESET $end
+$var wire 1 ( WRITE $end
+$var integer 32 H i [31:0] $end
+$upscope $end
+$scope module twos $end
+$var wire 8 I INPUT [7:0] $end
+$var reg 8 J RESULT [7:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx J
+bx I
+bx H
+bx G
+bx F
+bx E
+bx D
+bx C
+bx B
+bx A
+bx @
+bx ?
+bx >
+bx =
+bx <
+bx ;
+bx :
+bx 9
+bx 8
+bx 7
+bx 6
+b11111100 5
+bx 4
+bx 3
+bx 2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+x)
+x(
+x'
+bx &
+bx %
+1$
+1#
+b11111100 "
+bx !
+$end
+#1
+0$
+#2
+b1000 H
+#7
+0#
+#14
+1#
+#15
+b0 "
+b0 5
+#17
+b101000001010000000000001010 !
+b101000001010000000000001010 &
+#18
+b0 E
+b101 C
+b1010 4
+b1010 8
+b1010 =
+b10 G
+b0 *
+b0 >
+b0 A
+1(
+1)
+0'
+b0 .
+b101 2
+b1010 -
+b1010 6
+b101 1
+b101 @
+#19
+b1010 3
+b1010 ?
+b1010 B
+#20
+b0 +
+b0 7
+b0 ;
+b0 ,
+b0 9
+b0 J
+b0 %
+b0 <
+b0 0
+b0 D
+b0 /
+b0 :
+b0 F
+b0 I
+#21
+0#
+#28
+1#
+#29
+b100 "
+b100 5
+#31
+b100000000000000000000000101 !
+b100000000000000000000000101 &
+#32
+b0 C
+b0 4
+b0 8
+b0 =
+b101 G
+0)
+b0 2
+b101 -
+b101 6
+b100 1
+b100 @
+#33
+b0 3
+b0 ?
+b0 B
+#34
+b1010 4
+b1010 8
+b1010 =
+b1010 +
+b1010 7
+b1010 ;
+b11110110 ,
+b11110110 9
+b11110110 J
+b1010 /
+b1010 :
+b1010 F
+b1010 I
+#35
+b1010 3
+b1010 ?
+b1010 B
+0#
+#42
+1#
+#43
+b1000 "
+b1000 5
+#45
+b101000000010000000000000101 !
+b101000000010000000000000101 &
+#46
+b101 4
+b101 8
+b101 =
+b1 C
+1)
+b1 2
+b101 1
+b101 @
+b1010 %
+b1010 <
+b1010 0
+b1010 D
+#47
+b101 3
+b101 ?
+b101 B
+#49
+0#
+#56
+1#
+#57
+b1100 "
+b1100 5
+#59
+b1000000110000000000000001 !
+b1000000110000000000000001 &
+#60
+b11110110 +
+b11110110 7
+b11110110 ;
+b11 C
+b11110110 4
+b11110110 8
+b11110110 =
+b1 G
+b1 *
+b1 >
+b1 A
+0)
+1'
+b11 2
+b1 -
+b1 6
+b1 1
+b1 @
+#62
+b11111011 4
+b11111011 8
+b11111011 =
+b11111011 +
+b11111011 7
+b11111011 ;
+b11111011 ,
+b11111011 9
+b11111011 J
+b0 3
+b0 ?
+b0 B
+b101 /
+b101 :
+b101 F
+b101 I
+#63
+0#
+#64
+b101 3
+b101 ?
+b101 B
+#70
+1#
+#71
+b10000 "
+b10000 5
+#73
+bx !
+bx &
+#74
+bx E
+bx C
+bx G
+bx .
+bx 2
+bx -
+bx 6
+bx 1
+bx @
+#76
+bx 4
+bx 8
+bx =
+bx +
+bx 7
+bx ;
+bx ,
+bx 9
+bx J
+bx %
+bx <
+bx 0
+bx D
+bx /
+bx :
+bx F
+bx I
+#77
+0#
+#78
+bx 3
+bx ?
+bx B
+#84
+1#
+#85
+b10100 "
+b10100 5
+#91
+0#
+#98
+1#
+#99
+b11000 "
+b11000 5
+#101

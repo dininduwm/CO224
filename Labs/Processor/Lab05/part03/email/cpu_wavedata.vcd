@@ -1,0 +1,308 @@
+$date
+	Thu May  7 16:26:48 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module testbenchCPU $end
+$var wire 32 ! INS [31:0] $end
+$var wire 8 " PC [7:0] $end
+$var reg 1 # CLK $end
+$var reg 1 $ RESET $end
+$scope module mycpu $end
+$var wire 8 % ALOP2 [7:0] $end
+$var wire 1 # CLK $end
+$var wire 32 & INS [31:0] $end
+$var wire 1 $ RESET $end
+$var wire 1 ' twoscompMUXSEL $end
+$var wire 1 ( regWRITEEN $end
+$var wire 1 ) immeMUXSEL $end
+$var wire 3 * aluOP [2:0] $end
+$var wire 8 + TWOSMUXOUT [7:0] $end
+$var wire 8 , TWOSCOMPOUT [7:0] $end
+$var wire 8 - REGOUT2 [7:0] $end
+$var wire 8 . REGOUT1 [7:0] $end
+$var wire 8 / ALUOUT [7:0] $end
+$var wire 8 0 ALOP1 [7:0] $end
+$var reg 8 1 DESTINATION [7:0] $end
+$var reg 8 2 OP [7:0] $end
+$var reg 8 3 PC [7:0] $end
+$var reg 8 4 SOURCE1 [7:0] $end
+$var reg 8 5 SOURCE2 [7:0] $end
+$scope module muximme $end
+$var wire 8 6 INPUT2 [7:0] $end
+$var wire 1 ) SELECT $end
+$var wire 8 7 INPUT1 [7:0] $end
+$var reg 8 8 RESULT [7:0] $end
+$upscope $end
+$scope module muxtwos $end
+$var wire 1 ' SELECT $end
+$var wire 8 9 INPUT2 [7:0] $end
+$var wire 8 : INPUT1 [7:0] $end
+$var reg 8 ; RESULT [7:0] $end
+$upscope $end
+$scope module myalu $end
+$var wire 8 < DATA1 [7:0] $end
+$var wire 8 = DATA2 [7:0] $end
+$var wire 3 > SELECT [2:0] $end
+$var reg 8 ? RESULT [7:0] $end
+$upscope $end
+$scope module mycu $end
+$var wire 8 @ OP [7:0] $end
+$var reg 3 A aluOP [2:0] $end
+$var reg 1 ) immeMUXSEL $end
+$var reg 1 ( regWRITEEN $end
+$var reg 1 ' twoscompMUXSEL $end
+$upscope $end
+$scope module myreg $end
+$var wire 1 # CLK $end
+$var wire 8 B IN [7:0] $end
+$var wire 3 C INADDRESS [2:0] $end
+$var wire 8 D OUT1 [7:0] $end
+$var wire 3 E OUT1ADDRESS [2:0] $end
+$var wire 8 F OUT2 [7:0] $end
+$var wire 3 G OUT2ADDRESS [2:0] $end
+$var wire 1 $ RESET $end
+$var wire 1 ( WRITE $end
+$var integer 32 H i [31:0] $end
+$upscope $end
+$scope module twos $end
+$var wire 8 I INPUT [7:0] $end
+$var reg 8 J RESULT [7:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx J
+bx I
+bx H
+bx G
+bx F
+bx E
+bx D
+bx C
+bx B
+bx A
+bx @
+bx ?
+bx >
+bx =
+bx <
+bx ;
+bx :
+bx 9
+bx 8
+bx 7
+bx 6
+bx 5
+bx 4
+b11111100 3
+bx 2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+x)
+x(
+x'
+bx &
+bx %
+1$
+1#
+b11111100 "
+bx !
+$end
+#1
+0$
+#2
+b1000 H
+#7
+0#
+#14
+1#
+#15
+b0 "
+b0 3
+#17
+b101000000000000000000000101 !
+b101000000000000000000000101 &
+#18
+b0 *
+b0 >
+b0 A
+1(
+1)
+0'
+b0 C
+b0 E
+b101 G
+b101 0
+b101 8
+b101 =
+b101 2
+b101 @
+b0 1
+b0 4
+b101 5
+b101 6
+#19
+b101 /
+b101 ?
+b101 B
+#20
+b0 +
+b0 7
+b0 ;
+b0 ,
+b0 9
+b0 J
+b0 %
+b0 <
+b0 .
+b0 D
+b0 -
+b0 :
+b0 F
+b0 I
+#21
+0#
+#28
+1#
+#29
+b100 "
+b100 3
+#31
+b101000000010000000000000111 !
+b101000000010000000000000111 &
+#32
+b1 C
+b111 G
+b111 0
+b111 8
+b111 =
+b1 1
+b111 5
+b111 6
+b101 %
+b101 <
+b101 .
+b101 D
+#35
+0#
+#42
+1#
+#43
+b1000 "
+b1000 3
+#45
+b110000000000000001 !
+b110000000000000001 &
+#46
+b1 *
+b1 >
+b1 A
+0)
+b11 C
+b1 G
+b0 0
+b0 8
+b0 =
+b0 2
+b0 @
+b11 1
+b1 5
+b1 6
+#48
+b101 0
+b101 8
+b101 =
+b101 +
+b101 7
+b101 ;
+b11111011 ,
+b11111011 9
+b11111011 J
+b110 /
+b110 ?
+b110 B
+b101 -
+b101 :
+b101 F
+b101 I
+#49
+0#
+#50
+b1010 /
+b1010 ?
+b1010 B
+#56
+1#
+#57
+b1100 "
+b1100 3
+#59
+bx !
+bx &
+#60
+bx C
+bx E
+bx G
+bx 2
+bx @
+bx 1
+bx 4
+bx 5
+bx 6
+#62
+bx 0
+bx 8
+bx =
+bx +
+bx 7
+bx ;
+bx ,
+bx 9
+bx J
+bx %
+bx <
+bx .
+bx D
+bx -
+bx :
+bx F
+bx I
+#63
+0#
+#64
+bx /
+bx ?
+bx B
+#70
+1#
+#71
+b10000 "
+b10000 3
+#77
+0#
+#84
+1#
+#85
+b10100 "
+b10100 3
+#91
+0#
+#98
+1#
+#99
+b11000 "
+b11000 3
+#101

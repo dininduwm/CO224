@@ -20,12 +20,12 @@ module cpu(PC, INS, CLK, RESET);
     input CLK, RESET; // clock and reset for the cpu
     output reg [7:0] PC; //programme counter
 
-    wire [7:0] SOURCE1, SOURCE2, DESTINATION, OP; //decoded instructons
+    reg [7:0] SOURCE1, SOURCE2, DESTINATION, OP; //decoded instructons
     wire twoscompMUXSEL, immeMUXSEL, regWRITEEN;       //control signals
     wire [2:0] aluOP;
 
     wire [7:0] REGOUT1, REGOUT2; //register file outputs
-    wire [7:0] ALOP1, ALOP2, ALUOUT; //alu signal
+    wire [7:0] ALOP1, ALOP2, ALUOUT; //alu out signal
     wire [7:0] TWOSCOMPOUT; //output of the twos complement
     wire [7:0] TWOSMUXOUT; //output of the twos compliment mux
 
@@ -37,18 +37,18 @@ module cpu(PC, INS, CLK, RESET);
     mux2to1 muximme (TWOSMUXOUT, SOURCE2, ALOP1, immeMUXSEL); //immmediate value load mux
     alu myalu (ALOP2, ALOP1, ALUOUT, aluOP); //alu module 
 
-    // decoding the instructions
-    assign #1 DESTINATION = INS[23:16];
-    assign #1 SOURCE1 = INS[16:8];
-    assign #1 SOURCE2 = INS[7:0];
-    assign #1 OP = INS[31:24];
+    always @ (INS) // instruction decoding unit
+    begin   
+        #1     
+        {OP, DESTINATION, SOURCE1, SOURCE2} = INS; //decode the instruction     
+    end
 
     assign ALOP2 = REGOUT1; //connect regout1 with the alu oparand 2
 
     always @ (posedge CLK)
     begin
       if (RESET == 1'b1) PC = -4; // rest the pc counter
-      else #1 PC = PC + 4;        // increment the pc
+      else #1 PC = PC + 4;        // 
     end
 
 endmodule

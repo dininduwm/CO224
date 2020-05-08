@@ -5,17 +5,17 @@ output [7:0] RESULT; //declare the output
 
 reg [7:0] RESULT; // declare the outputs as registers
 
-always @ (DATA1 or DATA2 or SELECT) // this block run if there is any change in DATA1 or DATA2 or SELECT
+always @ (DATA1, DATA2, SELECT) // this block run if there is any change in DATA1 or DATA2 or SELECT
 begin
     case (SELECT)
-    'b000:
-        RESULT = DATA2; //forward operation  
-    'b001:
-        RESULT = DATA1 + DATA2; // add operation
-    'b010:
-        RESULT = DATA1 & DATA2; // bitwise and operation
-    'b011:
-        RESULT = DATA1 | DATA2; // bitwise or operation
+    3'b000:
+        #1 RESULT = DATA2; //forward operation  1
+    3'b001:
+        #2 RESULT = DATA1 + DATA2; // add operation 2
+    3'b010:
+        #1 RESULT = DATA1 & DATA2; // bitwise and operation 1
+    3'b011:
+        #1 RESULT = DATA1 | DATA2; // bitwise or operation 1
     default: RESULT = 0; //result 0 if the other cases
     endcase
 end
