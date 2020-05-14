@@ -1,3 +1,8 @@
+/*
+Author - W M D U Thilakarathna
+Reg No - E/16/366
+*/
+
 module alu(DATA1, DATA2, RESULT, SELECT);
 input [7:0] DATA1, DATA2; //declare the inputs
 input [2:0] SELECT; //declare the select input

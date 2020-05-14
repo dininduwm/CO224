@@ -4,7 +4,7 @@ module twosComp(INPUT, RESULT); //change this
 
     always @ (INPUT)
     begin
-      RESULT = INPUT*-1; // 2s comp negative
+      RESULT = ~INPUT + 1; // 2s comp negative
     end
 
 endmodule
