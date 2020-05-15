@@ -3,7 +3,7 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
-module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RESET);
+module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RESET, ALUCOMP);
 
     parameter [7:0] ADD   = 8'h00, 
                     SUB   = 8'h01,
@@ -15,7 +15,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                     BEQ   = 8'h07;
 
     input [7:0] OP; //input op code
-    input RESET; // RESET input 
+    input RESET, ALUCOMP; // RESET input and alu comparator signal
     output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump; //output registers
     output reg [2:0] aluOP;
 
@@ -90,6 +90,16 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b0;     //regwrite enable pin
                 aluOP = 3'b001;        //cpu op code  
                 jump = 1'b1;           //jump instruction
+            end
+
+        BEQ:
+            begin
+                #1
+                twoscompMUXSEL = 1'b1; //twos compliment select mux
+                immeMUXSEL = 1'b0;     //immediate value select mux
+                regWRITEEN = 1'b0;     //regwrite enable pin
+                aluOP = 3'b001;        //cpu op code  
+                jump = (1'b1&ALUCOMP); //jump instruction
             end
         endcase
     end
