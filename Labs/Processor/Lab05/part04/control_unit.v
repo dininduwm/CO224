@@ -3,7 +3,7 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
-module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RESET, ALUCOMP);
+module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, RESET);
 
     parameter [7:0] ADD   = 8'h00, 
                     SUB   = 8'h01,
@@ -16,7 +16,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
 
     input [7:0] OP; //input op code
     input RESET, ALUCOMP; // RESET input and alu comparator signal
-    output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump; //output registers
+    output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq; //output registers
     output reg [2:0] aluOP;
 
     always @ (*)
@@ -30,6 +30,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b1;     //regwrite enable pin
                 aluOP = 3'b001;        //cpu op code  
                 jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
             end
 
         SUB:
@@ -40,6 +41,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b1;     //regwrite enable pin
                 aluOP = 3'b001;        //cpu op code  
                 jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
             end
 
         AND:
@@ -50,6 +52,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b1;     //regwrite enable pin
                 aluOP = 3'b010;        //cpu op code  
                 jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
             end
 
         OR:
@@ -60,6 +63,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b1;     //regwrite enable pin
                 aluOP = 3'b011;        //cpu op code  
                 jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
             end
 
         MOV:
@@ -70,6 +74,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b1;     //regwrite enable pin
                 aluOP = 3'b000;        //cpu op code  
                 jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
             end
 
         LOADI:
@@ -80,6 +85,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b1;     //regwrite enable pin
                 aluOP = 3'b000;        //cpu op code  
                 jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
             end
 
         J:
@@ -90,6 +96,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 regWRITEEN = 1'b0;     //regwrite enable pin
                 aluOP = 3'b001;        //cpu op code  
                 jump = 1'b1;           //jump instruction
+                beq = 1'b0;            //beq instruction
             end
 
         BEQ:
@@ -99,14 +106,19 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RES
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b0;     //regwrite enable pin
                 aluOP = 3'b001;        //cpu op code  
-                jump = (1'b1&ALUCOMP); //jump instruction
+                jump = 1'b0;           //jump instruction
+                beq = 1'b1;            //beq instruction
             end
         endcase
     end
 
     always @ (*) //if reset set the pc select
     begin
-      if (RESET) jump = 0;
+      if (RESET) 
+      begin
+        jump = 1'b0;
+        beq = 1'b0;
+      end
     end
 
 endmodule

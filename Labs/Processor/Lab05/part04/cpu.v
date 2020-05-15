@@ -18,7 +18,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET);
     output reg [31:0] PC; //programme counter
 
     wire [7:0] SOURCE1, SOURCE2, DESTINATION, OP;  //decoded INSTRUCTIONtructons
-    wire twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump;   //control signals
+    wire twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq, jumpMUXSEL;   //control signals
     wire [2:0] aluOP; // alu op code
 
     wire [7:0] REGOUT1, REGOUT2; //register file outputs
@@ -32,15 +32,20 @@ module cpu(PC, INSTRUCTION, CLK, RESET);
     wire [31:0] PCJUMP; //store the next value of the pc if the instruction is jump
 
     //initiating the modules
-    control_unit mycu (OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, RESET, ALUCOMP); //control unit module
+    control_unit mycu (OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, RESET); //control unit module
     reg_file myreg (ALUOUT, REGOUT1, REGOUT2, DESTINATION[2:0], SOURCE1[2:0], SOURCE2[2:0], regWRITEEN, CLK, RESET); //alu module
     twosComp twos (REGOUT2, TWOSCOMPOUT); // twos complement unit
     mux2to1_8bit muxtwos (REGOUT2, TWOSCOMPOUT, TWOSMUXOUT, twoscompMUXSEL); //mux for two to one in the 2s complement selection
     mux2to1_8bit muximme (TWOSMUXOUT, SOURCE2, ALOP1, immeMUXSEL); //immmediate value load mux
-    mux2to1_32bit muxjump (PCINCBY4, PCJUMP, PCNEXT, jump); //jump instruction
+    mux2to1_32bit muxjump (PCINCBY4, PCJUMP, PCNEXT, jumpMUXSEL); //jump mux
     alu myalu (ALOP2, ALOP1, ALUOUT, aluOP, ALUCOMP); //alu module 
     adder myadder (PC, 32'h00000004, PCINCBY4); //adder to increment the cpu
     adder jumpadder (PCINCBY4, {{22{DESTINATION[7]}}, DESTINATION, 2'b00}, PCJUMP); //adder for the jump instruction
+
+    //beq and j instructions
+    wire ANDOUTBEQ; //out wire for the and gate
+    and a1(ANDOUTBEQ, beq, ALUCOMP);  //and gate to decide a successfull beq command
+    or o1(jumpMUXSEL, ANDOUTBEQ, jump); //or gate to select the mux for branch
 
     // decoding the INSTRUCTIONtructions
     assign DESTINATION = INSTRUCTION[23:16];
