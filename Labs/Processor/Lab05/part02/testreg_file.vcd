@@ -1,0 +1,44 @@
+$date
+	Sun May  3 17:52:40 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module testBench $end
+$var wire 8 ! OUT2 [7:0] $end
+$var wire 8 " OUT1 [7:0] $end
+$var reg 1 # CLK $end
+$var reg 8 $ IN [7:0] $end
+$var reg 3 % INADDRESS [2:0] $end
+$var reg 3 & OUT1ADDRESS [2:0] $end
+$var reg 3 ' OUT2ADDRESS [2:0] $end
+$var reg 1 ( RESET $end
+$var reg 1 ) WRITE $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+1)
+x(
+b1 '
+b0 &
+b0 %
+b11100 $
+0#
+bx "
+bx !
+$end
+#2
+1#
+#4
+0#
+0)
+b1 %
+b100110 $
+#6
+b100110 !
+1#
+#9
