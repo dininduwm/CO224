@@ -21,8 +21,8 @@ This assembler will perform some basic error checks on your program. A valid ins
 NOTE	: You must define the op-codes assinged to instructions' opearations, to match the definitions in your instruction set architecture. 
 	  Edit the relevant section below.
 
-Compiling the program	: gcc CO224Assembler.c -o CO224Assembler
-Using the assembler	: ./CO224Assembler <your_assembly_file_name> (e.g. ./CO224Assembler program.s)
+Compiling the program	: gcc e16366_lab5_CO224Assembler.c -o e16366_lab5_CO224Assembler.c
+Using the assembler	: ./e16366_lab5_CO224Assembler <your_assembly_file_name> (e.g. ./CO224Assembler program.s)
 Generated output file	: <your_assembly_file_name>.machine
 */
 
@@ -54,8 +54,9 @@ int main( int argc, char *argv[] )
 	char *op_srl 	= "00001010";
 	char *op_sra 	= "00001011";
 	char *op_ror	= "00001100";
-	char *op_load 	= "00001101";
-	char *op_store 	= "00001110";
+	char *op_mul   	= "00001101";
+	char *op_load 	= "00001110";
+	char *op_store 	= "00001111";
 	/************************************************************************/
 	
 	const char delim[] = " ";
@@ -136,11 +137,13 @@ int main( int argc, char *argv[] )
 			else if(strcasecmp(in_token,"or")==0) strcpy(out_token, op_or);
 			else if(strcasecmp(in_token,"j")==0) strcpy(out_token, op_j);
 			else if(strcasecmp(in_token,"beq")==0) strcpy(out_token, op_beq);
+			else if(strcasecmp(in_token,"bne")==0) strcpy(out_token, op_bne);
 			else if(strcasecmp(in_token,"load")==0) strcpy(out_token, op_load);
 			else if(strcasecmp(in_token,"sll")==0) strcpy(out_token, op_sll);
 			else if(strcasecmp(in_token,"srl")==0) strcpy(out_token, op_srl);
 			else if(strcasecmp(in_token,"sra")==0) strcpy(out_token, op_sra);
 			else if(strcasecmp(in_token,"ror")==0) strcpy(out_token, op_ror);
+			else if(strcasecmp(in_token,"mul")==0) strcpy(out_token, op_mul);
 
 			// Encoding register numbers
 			else if(strcmp(in_token,"0")==0 || strcmp(in_token,"0\n")==0) strcpy(out_token, "00000000");
