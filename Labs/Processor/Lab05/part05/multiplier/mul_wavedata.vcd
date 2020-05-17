@@ -1,0 +1,106 @@
+$date
+	Sun May 17 11:27:58 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tbMul $end
+$var wire 8 ! RESULT [7:0] $end
+$var reg 8 " DATA1 [7:0] $end
+$var reg 8 # DATA2 [7:0] $end
+$scope module m $end
+$var wire 8 $ DATA1 [7:0] $end
+$var wire 8 % DATA2 [7:0] $end
+$var wire 8 & SHIFT7 [7:0] $end
+$var wire 8 ' SHIFT6 [7:0] $end
+$var wire 8 ( SHIFT5 [7:0] $end
+$var wire 8 ) SHIFT4 [7:0] $end
+$var wire 8 * SHIFT3 [7:0] $end
+$var wire 8 + SHIFT2 [7:0] $end
+$var wire 8 , SHIFT1 [7:0] $end
+$var wire 8 - SHIFT0 [7:0] $end
+$var reg 8 . RES0 [7:0] $end
+$var reg 8 / RES1 [7:0] $end
+$var reg 8 0 RES2 [7:0] $end
+$var reg 8 1 RES3 [7:0] $end
+$var reg 8 2 RES4 [7:0] $end
+$var reg 8 3 RES5 [7:0] $end
+$var reg 8 4 RES6 [7:0] $end
+$var reg 8 5 RES7 [7:0] $end
+$var reg 8 6 RESULT [7:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b1111 6
+b0 5
+b0 4
+b0 3
+b0 2
+b0 1
+b1100 0
+b0 /
+b11 .
+b11 -
+b110 ,
+b1100 +
+b11000 *
+b110000 )
+b1100000 (
+b11000000 '
+b10000000 &
+b101 %
+b11 $
+b101 #
+b11 "
+b1111 !
+$end
+#2
+b110010 !
+b110010 6
+b101000 0
+b1010 .
+b1010 -
+b10100 ,
+b101000 +
+b1010000 *
+b10100000 )
+b1000000 (
+b10000000 '
+b0 &
+b1010 "
+b1010 $
+#4
+b101000 !
+b101000 6
+b100000 0
+b1000 .
+b1000 -
+b10000 ,
+b100000 +
+b1000000 *
+b10000000 )
+b0 (
+b0 '
+b1000 "
+b1000 $
+#6
+b11001 !
+b11001 6
+b10100 0
+b101 .
+b101 -
+b1010 ,
+b10100 +
+b101000 *
+b1010000 )
+b10100000 (
+b1000000 '
+b10000000 &
+b101 "
+b101 $
+#8
