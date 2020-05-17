@@ -1,19 +1,17 @@
-//`include "logicalShifterLeft.v"
-//`include "logicalShifterRight.v"
-`include "rotateShifterRight.v"
+`include "barrelShifter.v"
 
 module barrelShifter_tb;
 
  // Inputs
  reg [7:0] Ip;
  reg [7:0] shift_mag;
+ reg shift_dir;
+ reg [1:0] shift_mode;
 
  // Outputs
  wire [7:0] Op;
 
- // Instantiate the Unit Under Test (UUT)
- //logicalShifterLeft uut (.INPUT(Ip), .OUTPUT(Op), .LSHIFT(shift_mag));
- rotateShifterRight uut (.INPUT(Ip), .OUTPUT(Op), .RSHIFT(shift_mag));
+ barrelShifter uut (Ip, Op, shift_mag, shift_mode);
 
  initial // instruction array
     begin
@@ -25,24 +23,22 @@ module barrelShifter_tb;
  initial 
     begin
         // Initialize Inputs
-        Ip    = 8'd5;
+        Ip    = 8'd15;
         shift_mag = 8'd1;
+        shift_mode = 2'd0;
 
         #5
-        shift_mag = 8'd7;
+        shift_mag = 8'd9;
 
         #5
-        shift_mag = 8'd8;
+        shift_mode = 2'd1;
+      
+        #5
+        shift_mode = 2'd2;
 
         #5
-
-        // Add stimulus here
-        Ip    = 8'd16;
-        shift_mag = 8'd2;
-
-        #20;
-        Ip    = -8'd4;
-        shift_mag = 8'd2;
+        shift_mode = 2'd3;
+      
 
         #10
         $finish;

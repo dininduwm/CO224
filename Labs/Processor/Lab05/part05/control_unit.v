@@ -3,7 +3,7 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
-module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, RESET);
+module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, RESET);
 
     parameter [7:0] ADD   = 8'h00, 
                     SUB   = 8'h01,
@@ -21,8 +21,8 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
 
     input [7:0] OP; //input op code
     input RESET, ALUCOMP; // RESET input and alu comparator signal
-    output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq, bne; //output registers
-    output reg [3:0] aluOP;
+    output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq, bne, alu_shiftMUXSEL; //output registers
+    output reg [2:0] aluOP;
 
     always @ (*)
     begin
@@ -33,10 +33,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0001;        //cpu op code  
+                aluOP = 3'b001;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         SUB:
@@ -45,10 +46,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b1; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0001;        //cpu op code  
+                aluOP = 3'b001;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         AND:
@@ -57,10 +59,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0010;        //cpu op code  
+                aluOP = 3'b010;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         OR:
@@ -69,10 +72,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0011;        //cpu op code  
+                aluOP = 3'b011;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         MOV:
@@ -81,10 +85,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0000;        //cpu op code  
+                aluOP = 3'b000;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         LOADI:
@@ -93,10 +98,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b0; //twos compliment select mux
                 immeMUXSEL = 1'b1;     //immediate value select mux
                 regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0000;        //cpu op code  
+                aluOP = 3'b000;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         J:
@@ -105,10 +111,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b1; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b0;     //regwrite enable pin
-                aluOP = 4'b0001;        //cpu op code  
+                aluOP = 3'b001;        //cpu op code  
                 jump = 1'b1;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         BEQ:
@@ -117,10 +124,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b1; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b0;     //regwrite enable pin
-                aluOP = 4'b0001;        //cpu op code  
+                aluOP = 3'b001;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b1;            //beq instruction
                 bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
 
         BNE:
@@ -129,58 +137,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b1; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b0;     //regwrite enable pin
-                aluOP = 4'b0001;        //cpu op code  
+                aluOP = 3'b001;        //cpu op code  
                 jump = 1'b0;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b1;            //bne instruction
-            end
-
-        SLL:
-            begin
-                #1
-                twoscompMUXSEL = 1'b0; //twos compliment select mux
-                immeMUXSEL = 1'b1;     //immediate value select mux
-                regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0100;        //cpu op code  
-                jump = 1'b0;           //jump instruction
-                beq = 1'b0;            //beq instruction
-                bne = 1'b0;            //bne instruction
-            end
-
-        SRL:
-            begin
-                #1
-                twoscompMUXSEL = 1'b0; //twos compliment select mux
-                immeMUXSEL = 1'b1;     //immediate value select mux
-                regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0101;        //cpu op code  
-                jump = 1'b0;           //jump instruction
-                beq = 1'b0;            //beq instruction
-                bne = 1'b0;            //bne instruction
-            end
-
-        SRA:
-            begin
-                #1
-                twoscompMUXSEL = 1'b0; //twos compliment select mux
-                immeMUXSEL = 1'b1;     //immediate value select mux
-                regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0110;        //cpu op code  
-                jump = 1'b0;           //jump instruction
-                beq = 1'b0;            //beq instruction
-                bne = 1'b0;            //bne instruction
-            end
-
-        ROR:
-            begin
-                #1
-                twoscompMUXSEL = 1'b0; //twos compliment select mux
-                immeMUXSEL = 1'b1;     //immediate value select mux
-                regWRITEEN = 1'b1;     //regwrite enable pin
-                aluOP = 4'b0111;        //cpu op code  
-                jump = 1'b0;           //jump instruction
-                beq = 1'b0;            //beq instruction
-                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
             end
         endcase
     end
