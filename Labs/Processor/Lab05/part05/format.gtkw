@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Sat May 16 09:02:43 2020
+[*] Sun May 17 10:23:34 2020
 [*]
 [dumpfile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab05/part05/cpu_wavedata.vcd"
-[dumpfile_mtime] "Sat May 16 09:01:26 2020"
-[dumpfile_size] 28299
+[dumpfile_mtime] "Sun May 17 10:20:52 2020"
+[dumpfile_size] 20322
 [savefile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab05/part05/format.gtkw"
-[timestart] 19
+[timestart] 0
 [size] 1440 863
 [pos] -1 -1
-*-3.333148 36 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-3.333148 21 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbenchCPU.
 [treeopen] testbenchCPU.mycpu.
 [treeopen] testbenchCPU.mycpu.myalu.
@@ -61,19 +61,42 @@ testbenchCPU.mycpu.muxjump.INPUT1[31:0]
 testbenchCPU.mycpu.muxjump.INPUT2[31:0]
 testbenchCPU.mycpu.muxjump.RESULT[31:0]
 @200
+-Shifter MUX
+@28
+testbenchCPU.mycpu.muxFin.SELECT
+@22
+testbenchCPU.mycpu.muxFin.INPUT1[7:0]
+testbenchCPU.mycpu.muxFin.INPUT2[7:0]
+testbenchCPU.mycpu.muxFin.RESULT[7:0]
+@200
+-Barrel Shifter
+@28
+testbenchCPU.mycpu.bs.SHIFT_MODE[1:0]
+testbenchCPU.mycpu.bs.INPUT[7:0]
+@24
+testbenchCPU.mycpu.bs.SHIFT[7:0]
+@28
+testbenchCPU.mycpu.bs.OUTPUT[7:0]
+@200
 -ALU
 @28
-testbenchCPU.mycpu.myalu.SELECT[3:0]
+testbenchCPU.mycpu.myalu.SELECT[2:0]
 @24
 testbenchCPU.mycpu.myalu.DATA1[7:0]
 testbenchCPU.mycpu.myalu.DATA2[7:0]
-@28
+@c00025
 testbenchCPU.mycpu.myalu.RESULT[7:0]
-testbenchCPU.mycpu.myalu.LOGICAL_LEFT[7:0]
-testbenchCPU.mycpu.myalu.LOGICAL_RIGHT[7:0]
-testbenchCPU.mycpu.myalu.ROTATE_RIGHT[7:0]
-@23
-testbenchCPU.mycpu.myalu.ARITH_RIGHT[7:0]
+@28
+(0)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(1)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(2)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(3)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(4)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(5)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(6)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(7)testbenchCPU.mycpu.myalu.RESULT[7:0]
+@1401205
+-group_end
 @200
 -REG File
 @24

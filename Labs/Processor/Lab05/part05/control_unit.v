@@ -3,7 +3,7 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
-module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, RESET);
+module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, RESET);
 
     parameter [7:0] ADD   = 8'h00, 
                     SUB   = 8'h01,
@@ -17,12 +17,14 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                     SLL   = 8'h09,
                     SRL   = 8'h0A,
                     SRA   = 8'h0B,
-                    ROR   = 8'h0C;
+                    ROR   = 8'h0C,
+                    MUL   = 8'h0D;
 
     input [7:0] OP; //input op code
     input RESET, ALUCOMP; // RESET input and alu comparator signal
     output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq, bne, alu_shiftMUXSEL; //output registers
     output reg [2:0] aluOP;
+    output reg [1:0] bShifterOpCode;
 
     always @ (*)
     begin
@@ -38,6 +40,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         SUB:
@@ -51,6 +54,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         AND:
@@ -64,6 +68,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         OR:
@@ -77,6 +82,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         MOV:
@@ -90,6 +96,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         LOADI:
@@ -103,6 +110,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         J:
@@ -111,11 +119,12 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 twoscompMUXSEL = 1'b1; //twos compliment select mux
                 immeMUXSEL = 1'b0;     //immediate value select mux
                 regWRITEEN = 1'b0;     //regwrite enable pin
-                aluOP = 3'b001;        //cpu op code  
+                aluOP = 3'b111;        //cpu op code  
                 jump = 1'b1;           //jump instruction
                 beq = 1'b0;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         BEQ:
@@ -129,6 +138,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b1;            //beq instruction
                 bne = 1'b0;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
 
         BNE:
@@ -142,6 +152,77 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 beq = 1'b0;            //beq instruction
                 bne = 1'b1;            //bne instruction
                 alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
+            end
+
+        SLL:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b1;     //immediate value select mux
+                regWRITEEN = 1'b1;     //regwrite enable pin
+                aluOP = 3'b000;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b1;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b11;//barrel shifter op code
+            end
+        
+        SRL:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b1;     //immediate value select mux
+                regWRITEEN = 1'b1;     //regwrite enable pin
+                aluOP = 3'b111;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b1;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
+            end
+
+        SRA:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b1;     //immediate value select mux
+                regWRITEEN = 1'b1;     //regwrite enable pin
+                aluOP = 3'b111;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b1;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b01;//barrel shifter op code
+            end
+
+        ROR:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b1;     //immediate value select mux
+                regWRITEEN = 1'b1;     //regwrite enable pin
+                aluOP = 3'b111;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b1;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b10;//barrel shifter op code
+            end
+
+        MUL:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b0;     //immediate value select mux
+                regWRITEEN = 1'b1;     //regwrite enable pin
+                aluOP = 3'b100;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
             end
         endcase
     end

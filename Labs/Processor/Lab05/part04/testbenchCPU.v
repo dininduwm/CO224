@@ -85,7 +85,7 @@ module testbenchCPU;
     // clock signal generation
     always
     begin
-      #7 CLK = ~CLK;       
+      #5 CLK = ~CLK;       
     end              
 
 endmodule

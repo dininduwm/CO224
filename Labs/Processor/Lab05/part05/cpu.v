@@ -36,7 +36,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET);
     wire [7:0] REGSAVE; //data to be save in the register in the next clock cycle
 
     //initiating the modules
-    control_unit mycu (OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, RESET); //control unit module
+    control_unit mycu (OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, RESET); //control unit module
     reg_file myreg (REGSAVE, REGOUT1, REGOUT2, DESTINATION[2:0], SOURCE1[2:0], SOURCE2[2:0], regWRITEEN, CLK, RESET); //alu module
     twosComp twos (REGOUT2, TWOSCOMPOUT); // twos complement unit
     mux2to1_8bit muxtwos (REGOUT2, TWOSCOMPOUT, TWOSMUXOUT, twoscompMUXSEL); //mux for two to one in the 2s complement selection

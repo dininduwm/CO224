@@ -62,6 +62,7 @@ module barrelShifter(INPUT, OUTPUT, SHIFT, SHIFT_MODE);
 
     always @(*)
     begin
+      #1
       case (SHIFT_MODE)
       2'b00:
         begin
