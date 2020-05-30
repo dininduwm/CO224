@@ -40,6 +40,8 @@ module cpu(PC, INSTRUCTION, CLK, RESET);
     wire [7:0] MEMREAD; //data from the memory
     wire BUSY_WAIT; // busy signal to hault the CPU
 
+    //TODO: Add the gate to the reg write sginal
+
     //initiating the modules
     control_unit mycu (OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, memReadEn, memWriteEn, memMUXSEL, RESET); //control unit module
     reg_file myreg (REGSAVE, REGOUT1, REGOUT2, DESTINATION[2:0], SOURCE1[2:0], SOURCE2[2:0], regWRITEEN, CLK, RESET); //alu module
@@ -79,7 +81,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET);
     always @ (posedge CLK)
     begin
       if (RESET == 1'b1) PC = -4; // rest the pc counter
-      else #1 PC = PCNEXT;        // increment the pc
+      else if (!BUSY_WAIT) #1 PC = PCNEXT;        // increment the pc
     end
 
     always @ (*)

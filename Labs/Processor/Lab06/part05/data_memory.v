@@ -42,12 +42,12 @@ always @(posedge clock)
 begin
     if(read && !write)
     begin
-        #40 readdata = memory_array[address];
+        readdata = #40 memory_array[address];
         busywait = 0;
     end
     if(write && !read)
 	begin
-        #40 memory_array[address] = writedata;
+        memory_array[address] = #40 writedata;
         busywait = 0;
     end
 end

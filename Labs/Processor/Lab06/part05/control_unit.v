@@ -18,7 +18,11 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                     SRL   = 8'h0A,
                     SRA   = 8'h0B,
                     ROR   = 8'h0C,
-                    MUL   = 8'h0D;
+                    MUL   = 8'h0D,
+                    LWD   = 8'h0E,
+                    LWI   = 8'h0F,
+                    SWD   = 8'h10,
+                    SWI   = 8'h11;
 
     input [7:0] OP; //input op code
     input RESET, ALUCOMP; // RESET input and alu comparator signal
@@ -264,6 +268,74 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                 bShifterOpCode = 2'b00;//barrel shifter op code
                 memMUXSEL = 1'b0;      //memory select mux
                 memWriteEn = 1'b0;     //memory write enable
+                memReadEn = 1'b0;      //memory read enable
+            end
+
+        LWD:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b0;     //immediate value select mux
+                regWRITEEN = 1'b1;     //regwrite enable pin
+                aluOP = 3'b000;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
+                memMUXSEL = 1'b1;      //memory select mux
+                memWriteEn = 1'b0;     //memory write enable
+                memReadEn = 1'b1;      //memory read enable
+            end
+
+        LWI:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b1;     //immediate value select mux
+                regWRITEEN = 1'b1;     //regwrite enable pin
+                aluOP = 3'b000;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
+                memMUXSEL = 1'b1;      //memory select mux
+                memWriteEn = 1'b0;     //memory write enable
+                memReadEn = 1'b1;      //memory read enable
+            end
+
+        SWD:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b0;     //immediate value select mux
+                regWRITEEN = 1'b0;     //regwrite enable pin
+                aluOP = 3'b000;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
+                memMUXSEL = 1'b0;      //memory select mux
+                memWriteEn = 1'b1;     //memory write enable
+                memReadEn = 1'b0;      //memory read enable
+            end
+
+        SWI:
+            begin
+                #1
+                twoscompMUXSEL = 1'b0; //twos compliment select mux
+                immeMUXSEL = 1'b1;     //immediate value select mux
+                regWRITEEN = 1'b0;     //regwrite enable pin
+                aluOP = 3'b000;        //cpu op code  
+                jump = 1'b0;           //jump instruction
+                beq = 1'b0;            //beq instruction
+                bne = 1'b0;            //bne instruction
+                alu_shiftMUXSEL = 1'b0;//select the out of alu or the barrel shifter
+                bShifterOpCode = 2'b00;//barrel shifter op code
+                memMUXSEL = 1'b0;      //memory select mux
+                memWriteEn = 1'b1;     //memory write enable
                 memReadEn = 1'b0;      //memory read enable
             end
         endcase

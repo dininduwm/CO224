@@ -66,6 +66,7 @@ module testbenchCPU;
         {INST_MEMORY[23],INST_MEMORY[22],INST_MEMORY[21],INST_MEMORY[20]} = 32'b00000110111111010000000000000000;
         */
         
+        /*
         // loadi 0 0xFA
         {INST_MEMORY[3],INST_MEMORY[2],INST_MEMORY[1],INST_MEMORY[0]}     = 32'b00000101_000000000000000011111010;
         // sll 1 0 0x02
@@ -82,8 +83,16 @@ module testbenchCPU;
         {INST_MEMORY[27],INST_MEMORY[26],INST_MEMORY[25],INST_MEMORY[24]}     = 32'b00000101_00000011_00000000_00001010;
         // mul 4 2 3
         {INST_MEMORY[31],INST_MEMORY[30],INST_MEMORY[29],INST_MEMORY[28]}     = 32'b00001101_00000100_00000010_00000011;
+        */
+
+        // loadi 0 0x0A
+        {INST_MEMORY[3],INST_MEMORY[2],INST_MEMORY[1],INST_MEMORY[0]}     = 32'b00000101_000000000000000000001010;
+        // swi 0 3
+        {INST_MEMORY[7],INST_MEMORY[6],INST_MEMORY[5],INST_MEMORY[4]}     = 32'b00010001_00000000_00000000_00000011;
+        // lwi 1 0X03
+        {INST_MEMORY[11],INST_MEMORY[10],INST_MEMORY[9],INST_MEMORY[8]}   = 32'b00001111_00000001_00000000_00000011;
         
-        
+
         CLK = 1'b1;
         
         // assign values with time to input signals to see output 
