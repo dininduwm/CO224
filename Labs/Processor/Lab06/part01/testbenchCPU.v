@@ -4,6 +4,7 @@ Reg No - E/16/366
 */
 
 `include "cpu.v"
+`include "data_memory.v"
 
 module testbenchCPU;
     
@@ -13,8 +14,14 @@ module testbenchCPU;
     reg [7:0] INST_MEMORY [1023:0] ; //instruction array
 
     wire[31:0] PC;
+
+    wire memReadEn, memWriteEn; // memory read or write enable signals
+    wire [7:0] ADDRESS; // address of the data memory
+    wire [7:0] READ_DATA, WRITE_DATA; // read and write data of the memory module
+    wire BUSY_WAIT; // busy wait signal of the CPU
     
-    cpu mycpu(PC, INS, CLK, RESET); //initialize the cpu
+    cpu mycpu(PC, INS, CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT); //initialize the cpu
+    data_memory myDataMemory(CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT); // initialize the memory module
 
     initial // instruction array
     begin

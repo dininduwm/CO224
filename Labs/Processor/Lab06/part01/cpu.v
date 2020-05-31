@@ -11,13 +11,16 @@ Reg No - E/16/366
 `include "mux2to1_32bit.v"
 `include "adder.v"
 `include "barrelShifter.v"
-`include "data_memory.v"
 
-module cpu(PC, INSTRUCTION, CLK, RESET);
+module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, MEMREAD, BUSY_WAIT);
 
     input [31:0] INSTRUCTION; //fetched INSTRUCTIONtructions
     input CLK, RESET; // clock and reset for the cpu
+    input BUSY_WAIT; // busy wait signal from the memory
+    input [7:0] MEMREAD; // input from the memory read
     output reg [31:0] PC; //programme counter
+    output memReadEn, memWriteEn; // control signal to the data memory
+    output [7:0] ALUOUT, REGOUT1; // output signal to the memory (address and the write data input)
 
     wire [7:0] SOURCE1, SOURCE2, DESTINATION, OP;  //decoded INSTRUCTIONtructons
     wire twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq, bne, jumpMUXSEL, alu_shiftMUXSEL, memMUXSEL, memWriteEn, memReadEn;   //control signals
@@ -52,8 +55,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET);
     alu myalu (ALOP2, ALOP1, ALUOUT, aluOP, ALUCOMP); //alu module 
     adder myadder (PC, 32'h00000004, PCINCBY4); //adder to increment the cpu
     adder jumpadder (PCINCBY4, {{22{DESTINATION[7]}}, DESTINATION, 2'b00}, PCJUMP); //adder for the jump instruction
-    data_memory myDataMemory(CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, MEMREAD, BUSY_WAIT);
-
+    
     //beq and j instructions
     wire ANDOUTBEQ, ANDOUTBNE; //out wire for the and gate
     and a1(ANDOUTBEQ, beq, ALUCOMP);  //and gate to decide a successfull beq command
