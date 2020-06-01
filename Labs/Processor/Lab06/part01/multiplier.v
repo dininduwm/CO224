@@ -63,6 +63,6 @@ begin  // for this we can also use a multiplexer unit
     RES7 = 8'd0;
 end
 
-always @ (*) #6 RESULT = RES0 + RES1 + RES2 + RES3 + RES4 + RES5 + RES6 + RES7; //add the final result
+always @ (*) #3 RESULT = RES0 + RES1 + RES2 + RES3 + RES4 + RES5 + RES6 + RES7; //add the final result
 
 endmodule

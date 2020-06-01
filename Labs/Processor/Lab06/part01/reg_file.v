@@ -20,8 +20,9 @@ assign #2 OUT2 = REGISTERS[OUT2ADDRESS]; //writing data to outputs
 always @ (posedge CLK) // this code block run when we are in a positive clock edge
 begin
     // write input to the in address
+    #0.1
     if (WRITE == 1'b1)
-        #1 REGISTERS[INADDRESS] = IN;     
+        #0.9 REGISTERS[INADDRESS] = IN;     
 end
 
 

@@ -43,11 +43,11 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     wire [7:0] MEMREAD; //data from the memory
     wire BUSY_WAIT; // busy signal to hault the CPU
 
-    //TODO: Add the gate to the reg write sginal
+    wire regWRITEEN_FIN; // reg write enable signal after checking with the busy wait signal
 
     //initiating the modules
     control_unit mycu (OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, memReadEn, memWriteEn, memMUXSEL, RESET); //control unit module
-    reg_file myreg (REGSAVE, REGOUT1, REGOUT2, DESTINATION[2:0], SOURCE1[2:0], SOURCE2[2:0], regWRITEEN, CLK, RESET); //alu module
+    reg_file myreg (REGSAVE, REGOUT1, REGOUT2, DESTINATION[2:0], SOURCE1[2:0], SOURCE2[2:0], regWRITEEN_FIN, CLK, RESET); //alu module
     twosComp twos (REGOUT2, TWOSCOMPOUT); // twos complement unit
     mux2to1_8bit muxtwos (REGOUT2, TWOSCOMPOUT, TWOSMUXOUT, twoscompMUXSEL); //mux for two to one in the 2s complement selection
     mux2to1_8bit muximme (TWOSMUXOUT, SOURCE2, ALOP1, immeMUXSEL); //immmediate value load mux
@@ -56,6 +56,9 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     adder myadder (PC, 32'h00000004, PCINCBY4); //adder to increment the cpu
     adder jumpadder (PCINCBY4, {{22{DESTINATION[7]}}, DESTINATION, 2'b00}, PCJUMP); //adder for the jump instruction
     
+    //and gate for the write enable signal to deactivate when busy wait
+    and a_reg(regWRITEEN_FIN, regWRITEEN, ~BUSY_WAIT);
+
     //beq and j instructions
     wire ANDOUTBEQ, ANDOUTBNE; //out wire for the and gate
     and a1(ANDOUTBEQ, beq, ALUCOMP);  //and gate to decide a successfull beq command
