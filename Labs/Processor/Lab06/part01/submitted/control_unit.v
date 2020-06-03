@@ -32,6 +32,10 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
 
     always @ (*)
     begin
+
+      memWriteEn = 1'b0; // reset the memory write signal
+      memReadEn = 1'b0; // reset the memory read signal
+
       case (OP)
         ADD:
             begin
