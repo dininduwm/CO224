@@ -22,7 +22,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     output memReadEn, memWriteEn; // control signal to the data memory
     output [7:0] ALUOUT, REGOUT1; // output signal to the memory (address and the write data input)
 
-    wire [7:0] SOURCE1, SOURCE2, DESTINATION, OP;  //decoded INSTRUCTIONtructons
+    wire [7:0] SOURCE1, SOURCE2, DESTINATION;  //decoded INSTRUCTIONtructons
     wire twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq, bne, jumpMUXSEL, alu_shiftMUXSEL, memMUXSEL, memWriteEn, memReadEn;   //control signals
     wire [2:0] aluOP; // alu op code
     wire [1:0] bShifterOpCode; // barrel shifter opcode
@@ -46,7 +46,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     wire regWRITEEN_FIN; // reg write enable signal after checking with the busy wait signal
 
     //initiating the modules
-    control_unit mycu (OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, memReadEn, memWriteEn, memMUXSEL, RESET); //control unit module
+    control_unit mycu (INSTRUCTION, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, memReadEn, memWriteEn, memMUXSEL, RESET); //control unit module
     reg_file myreg (REGSAVE, REGOUT1, REGOUT2, DESTINATION[2:0], SOURCE1[2:0], SOURCE2[2:0], regWRITEEN_FIN, CLK, RESET); //alu module
     twosComp twos (REGOUT2, TWOSCOMPOUT); // twos complement unit
     mux2to1_8bit muxtwos (REGOUT2, TWOSCOMPOUT, TWOSMUXOUT, twoscompMUXSEL); //mux for two to one in the 2s complement selection
@@ -69,7 +69,6 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     assign DESTINATION = INSTRUCTION[23:16];
     assign SOURCE1 = INSTRUCTION[16:8];
     assign SOURCE2 = INSTRUCTION[7:0];
-    assign OP = INSTRUCTION[31:24];
 
     //barrel shifter
     wire [7:0] BARRELOUT; //output of the barrel shifter

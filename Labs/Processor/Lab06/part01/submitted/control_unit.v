@@ -3,7 +3,7 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
-module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, memReadEn, memWriteEn, memMUXSEL, RESET);
+module control_unit(INSTRUCTION, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, memReadEn, memWriteEn, memMUXSEL, RESET);
 
     parameter [7:0] ADD   = 8'h00, 
                     SUB   = 8'h01,
@@ -24,7 +24,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
                     SWD   = 8'h10,
                     SWI   = 8'h11;
 
-    input [7:0] OP; //input op code
+    input [31:0] INSTRUCTION; //input instruction
     input RESET, ALUCOMP; // RESET input and alu comparator signal
     output reg twoscompMUXSEL, immeMUXSEL, regWRITEEN, jump, beq, bne, alu_shiftMUXSEL, memReadEn, memWriteEn, memMUXSEL; //output registers
     output reg [2:0] aluOP;
@@ -36,7 +36,7 @@ module control_unit(OP, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq
       memWriteEn = 1'b0; // reset the memory write signal
       memReadEn = 1'b0; // reset the memory read signal
 
-      case (OP)
+      case (INSTRUCTION[31:24])
         ADD:
             begin
                 #1
