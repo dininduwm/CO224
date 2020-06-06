@@ -60,13 +60,13 @@ module cache_memory(
     begin
         case (state)
             IDLE:
-                if (!CURRENT_VALID && read && !write)  
+                if (!CURRENT_VALID && ((read && !write) || (!read && write))) 
                     next_state = MEM_READ;
-                else if (CURRENT_VALID && TAG_MATCH && read && !write)
+                else if (CURRENT_VALID && TAG_MATCH && ((read && !write) || (!read && write)))
                     next_state = IDLE;
-                else if (CURRENT_VALID && !CURRENT_DIRTY && !TAG_MATCH && read && !write)
+                else if (CURRENT_VALID && !CURRENT_DIRTY && !TAG_MATCH && ((read && !write) || (!read && write)))
                     next_state = MEM_READ;
-                else if (CURRENT_VALID && CURRENT_DIRTY && !TAG_MATCH && read && !write)
+                else if (CURRENT_VALID && CURRENT_DIRTY && !TAG_MATCH && ((read && !write) || (!read && write)))
                     next_state = MEM_WRITE;
             
             MEM_READ:
@@ -78,20 +78,25 @@ module cache_memory(
                         // put the read data to the cache
                         data_array[index] = MAIN_MEM_READ_DATA;
                         tag_array[index] = tag;
-                        validBit_array[index] = 1'b1;
-                        dirtyBit_array[index] = 1'b0;
+                        validBit_array[index] = 1'b1; // set the valid bit after loading data
+                        dirtyBit_array[index] = 1'b0; // set the dirty bit after loading data
                     end
 
 
             MEM_WRITE:
                 if (MAIN_MEM_BUSY_WAIT)
                     next_state = MEM_WRITE;
-                else    
-                    next_state = IDLE;
+                else   
+                    begin 
+                        next_state = IDLE;
+                        validBit_array[index] = 1'b1; // set the valid bit after loading data
+                        dirtyBit_array[index] = 1'b0; // set the valid bit after writing data
+                    end
             
         endcase
     end
 
+    // TODO: Delays should be corrected
     // combinational output logic
     always @(*)
     begin
@@ -100,18 +105,19 @@ module cache_memory(
             begin
                 // set main memory read and write signal to low
                 MAIN_MEM_READ = 1'b0;
-                MAIN_MEM_WRITE = 1'b0;
+                MAIN_MEM_WRITE = 1'b0;               
+                
+                #1
+                if (tag_array[index] == tag) // tag comparisan
+                TAG_MATCH = 1'b1;
+                else
+                TAG_MATCH = 1'b0;
 
-                if (read)
+                CURRENT_VALID = validBit_array[index];
+                CURRENT_DIRTY = dirtyBit_array[index];
+
+                if (read) // detect the idle read status
                 begin
-                  #1
-                  if (tag_array[index] == tag) // tag comparisan
-                    TAG_MATCH = 1'b1;
-                  else
-                    TAG_MATCH = 1'b0;
-
-                  CURRENT_VALID = validBit_array[index];
-                  CURRENT_DIRTY = dirtyBit_array[index];
                   // fetching data
                   case(offset)
                     2'b00:
@@ -130,7 +136,23 @@ module cache_memory(
                     // TODO: Set the busy wait to 0
                     readdata = tempory_data; // output the data
                   end
+                end
 
+                if (write && TAG_MATCH && CURRENT_VALID) // detect the idle write status
+                begin
+                  #1
+                  case(offset) // writing to the register
+                    2'b00:
+                        data_array[index][7:0] = writedata;
+                    2'b01:
+                        data_array[index][15:8] = writedata;
+                    2'b10:
+                        data_array[index][23:16] = writedata;
+                    2'b11:
+                        data_array[index][31:24] = writedata;
+                  endcase
+
+                  dirtyBit_array[index] = 1'b1; // set the dirty bit because data is not consistant with the memory
                 end
                 
             end
@@ -139,7 +161,7 @@ module cache_memory(
             begin
                 MAIN_MEM_READ = 1'b1;
                 MAIN_MEM_WRITE = 1'b0;
-
+                // set the address to teh main memory
                 MAIN_MEM_ADDRESS = {tag, index};
             end
 
@@ -147,6 +169,10 @@ module cache_memory(
             begin
                 MAIN_MEM_READ = 1'b0;
                 MAIN_MEM_WRITE = 1'b1;
+                // set the address to the main memory
+                MAIN_MEM_ADDRESS = tag_array[index];
+                // set data to be written
+                MAIN_MEM_WRITE_DATA = data_array[index];
             end
             
         endcase

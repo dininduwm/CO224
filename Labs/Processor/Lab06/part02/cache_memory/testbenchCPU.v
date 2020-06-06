@@ -45,7 +45,9 @@ module testbenchCPU;
 
         #1
         RESET = 1'b0;
-
+        
+        /*
+        #1
         ADDRESS = 8'b0000_0001;
         memReadEn = 1'b1;       
         memWriteEn = 1'b0;
@@ -59,8 +61,28 @@ module testbenchCPU;
 
         #10
         ADDRESS = 8'b1000_0010;
+        */
 
-        #400
+        
+        #1
+        ADDRESS = 8'b0000_0001;
+        WRITE_DATA = 8'hFA;
+        memReadEn = 1'b0;       
+        memWriteEn = 1'b1;
+
+        #200 
+        ADDRESS = 8'b0000_0001;
+        memReadEn = 1'b1;
+        memWriteEn = 1'b0;
+
+        #30
+        ADDRESS = 8'b0010_0001;
+        WRITE_DATA = 8'hFA;
+        memReadEn = 1'b0;       
+        memWriteEn = 1'b1;
+        
+
+        #800
         $finish;
     end
     
