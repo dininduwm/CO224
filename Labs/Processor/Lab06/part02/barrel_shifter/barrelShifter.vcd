@@ -1,0 +1,575 @@
+$date
+	Sun May 17 13:20:39 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module barrelShifter_tb $end
+$var wire 8 ! Op [7:0] $end
+$var reg 8 " Ip [7:0] $end
+$var reg 8 # shift_mag [7:0] $end
+$var reg 2 $ shift_mode [1:0] $end
+$scope module uut $end
+$var wire 8 % INPUT [7:0] $end
+$var wire 8 & SHIFT [7:0] $end
+$var wire 2 ' SHIFT_MODE [1:0] $end
+$var wire 1 ( TMP7 $end
+$var wire 1 ) TMP6 $end
+$var wire 1 * TMP5 $end
+$var wire 1 + TMP4 $end
+$var wire 1 , TMP3 $end
+$var wire 1 - TMP2 $end
+$var wire 1 . TMP1 $end
+$var wire 8 / OUTPUT [7:0] $end
+$var wire 8 0 OUTINTER [7:0] $end
+$var wire 8 1 INTER2 [7:0] $end
+$var wire 8 2 INTER1 [7:0] $end
+$var wire 8 3 INNER3 [7:0] $end
+$var wire 8 4 ININTER [7:0] $end
+$var reg 8 5 LAYER4_IN [7:0] $end
+$var reg 1 6 SHIFT_DIR $end
+$scope module inmux $end
+$var wire 8 7 INPUT1 [7:0] $end
+$var wire 8 8 INPUT2 [7:0] $end
+$var wire 1 6 SELECT $end
+$var reg 8 9 RESULT [7:0] $end
+$upscope $end
+$scope module m0 $end
+$var wire 1 : INPUT1 $end
+$var wire 1 ; SELECT $end
+$var wire 1 . INPUT2 $end
+$var reg 1 < RESULT $end
+$upscope $end
+$scope module m00 $end
+$var wire 1 = INPUT1 $end
+$var wire 1 > SELECT $end
+$var wire 1 - INPUT2 $end
+$var reg 1 ? RESULT $end
+$upscope $end
+$scope module m000 $end
+$var wire 1 @ INPUT1 $end
+$var wire 1 A SELECT $end
+$var wire 1 + INPUT2 $end
+$var reg 1 B RESULT $end
+$upscope $end
+$scope module m0000 $end
+$var wire 8 C INPUT1 [7:0] $end
+$var wire 8 D INPUT2 [7:0] $end
+$var wire 1 E SELECT $end
+$var reg 8 F RESULT [7:0] $end
+$upscope $end
+$scope module m1 $end
+$var wire 1 G INPUT1 $end
+$var wire 1 H INPUT2 $end
+$var wire 1 I SELECT $end
+$var reg 1 J RESULT $end
+$upscope $end
+$scope module m11 $end
+$var wire 1 K INPUT1 $end
+$var wire 1 L SELECT $end
+$var wire 1 , INPUT2 $end
+$var reg 1 M RESULT $end
+$upscope $end
+$scope module m111 $end
+$var wire 1 N INPUT1 $end
+$var wire 1 O SELECT $end
+$var wire 1 * INPUT2 $end
+$var reg 1 P RESULT $end
+$upscope $end
+$scope module m2 $end
+$var wire 1 Q INPUT1 $end
+$var wire 1 R INPUT2 $end
+$var wire 1 S SELECT $end
+$var reg 1 T RESULT $end
+$upscope $end
+$scope module m22 $end
+$var wire 1 U INPUT1 $end
+$var wire 1 V INPUT2 $end
+$var wire 1 W SELECT $end
+$var reg 1 X RESULT $end
+$upscope $end
+$scope module m222 $end
+$var wire 1 Y INPUT1 $end
+$var wire 1 Z SELECT $end
+$var wire 1 ) INPUT2 $end
+$var reg 1 [ RESULT $end
+$upscope $end
+$scope module m3 $end
+$var wire 1 \ INPUT1 $end
+$var wire 1 ] INPUT2 $end
+$var wire 1 ^ SELECT $end
+$var reg 1 _ RESULT $end
+$upscope $end
+$scope module m33 $end
+$var wire 1 ` INPUT1 $end
+$var wire 1 a INPUT2 $end
+$var wire 1 b SELECT $end
+$var reg 1 c RESULT $end
+$upscope $end
+$scope module m333 $end
+$var wire 1 d INPUT1 $end
+$var wire 1 e SELECT $end
+$var wire 1 ( INPUT2 $end
+$var reg 1 f RESULT $end
+$upscope $end
+$scope module m4 $end
+$var wire 1 g INPUT1 $end
+$var wire 1 h INPUT2 $end
+$var wire 1 i SELECT $end
+$var reg 1 j RESULT $end
+$upscope $end
+$scope module m44 $end
+$var wire 1 k INPUT1 $end
+$var wire 1 l INPUT2 $end
+$var wire 1 m SELECT $end
+$var reg 1 n RESULT $end
+$upscope $end
+$scope module m444 $end
+$var wire 1 o INPUT1 $end
+$var wire 1 p INPUT2 $end
+$var wire 1 q SELECT $end
+$var reg 1 r RESULT $end
+$upscope $end
+$scope module m5 $end
+$var wire 1 s INPUT1 $end
+$var wire 1 t INPUT2 $end
+$var wire 1 u SELECT $end
+$var reg 1 v RESULT $end
+$upscope $end
+$scope module m55 $end
+$var wire 1 w INPUT1 $end
+$var wire 1 x INPUT2 $end
+$var wire 1 y SELECT $end
+$var reg 1 z RESULT $end
+$upscope $end
+$scope module m555 $end
+$var wire 1 { INPUT1 $end
+$var wire 1 | INPUT2 $end
+$var wire 1 } SELECT $end
+$var reg 1 ~ RESULT $end
+$upscope $end
+$scope module m6 $end
+$var wire 1 !" INPUT1 $end
+$var wire 1 "" INPUT2 $end
+$var wire 1 #" SELECT $end
+$var reg 1 $" RESULT $end
+$upscope $end
+$scope module m66 $end
+$var wire 1 %" INPUT1 $end
+$var wire 1 &" INPUT2 $end
+$var wire 1 '" SELECT $end
+$var reg 1 (" RESULT $end
+$upscope $end
+$scope module m666 $end
+$var wire 1 )" INPUT1 $end
+$var wire 1 *" INPUT2 $end
+$var wire 1 +" SELECT $end
+$var reg 1 ," RESULT $end
+$upscope $end
+$scope module m7 $end
+$var wire 1 -" INPUT1 $end
+$var wire 1 ." INPUT2 $end
+$var wire 1 /" SELECT $end
+$var reg 1 0" RESULT $end
+$upscope $end
+$scope module m77 $end
+$var wire 1 1" INPUT1 $end
+$var wire 1 2" INPUT2 $end
+$var wire 1 3" SELECT $end
+$var reg 1 4" RESULT $end
+$upscope $end
+$scope module m777 $end
+$var wire 1 5" INPUT1 $end
+$var wire 1 6" INPUT2 $end
+$var wire 1 7" SELECT $end
+$var reg 1 8" RESULT $end
+$upscope $end
+$scope module mt1 $end
+$var wire 1 9" INPUT1 $end
+$var wire 1 :" INPUT2 $end
+$var wire 1 ;" INPUT3 $end
+$var wire 1 <" INPUT4 $end
+$var wire 2 =" SELECT [1:0] $end
+$var reg 1 . RESULT $end
+$upscope $end
+$scope module mt2 $end
+$var wire 1 >" INPUT1 $end
+$var wire 1 ?" INPUT2 $end
+$var wire 1 @" INPUT3 $end
+$var wire 1 A" INPUT4 $end
+$var wire 2 B" SELECT [1:0] $end
+$var reg 1 - RESULT $end
+$upscope $end
+$scope module mt3 $end
+$var wire 1 C" INPUT1 $end
+$var wire 1 D" INPUT2 $end
+$var wire 1 E" INPUT3 $end
+$var wire 1 F" INPUT4 $end
+$var wire 2 G" SELECT [1:0] $end
+$var reg 1 , RESULT $end
+$upscope $end
+$scope module mt4 $end
+$var wire 1 H" INPUT1 $end
+$var wire 1 I" INPUT2 $end
+$var wire 1 J" INPUT3 $end
+$var wire 1 K" INPUT4 $end
+$var wire 2 L" SELECT [1:0] $end
+$var reg 1 + RESULT $end
+$upscope $end
+$scope module mt5 $end
+$var wire 1 M" INPUT1 $end
+$var wire 1 N" INPUT2 $end
+$var wire 1 O" INPUT3 $end
+$var wire 1 P" INPUT4 $end
+$var wire 2 Q" SELECT [1:0] $end
+$var reg 1 * RESULT $end
+$upscope $end
+$scope module mt6 $end
+$var wire 1 R" INPUT1 $end
+$var wire 1 S" INPUT2 $end
+$var wire 1 T" INPUT3 $end
+$var wire 1 U" INPUT4 $end
+$var wire 2 V" SELECT [1:0] $end
+$var reg 1 ) RESULT $end
+$upscope $end
+$scope module mt7 $end
+$var wire 1 W" INPUT1 $end
+$var wire 1 X" INPUT2 $end
+$var wire 1 Y" INPUT3 $end
+$var wire 1 Z" INPUT4 $end
+$var wire 2 [" SELECT [1:0] $end
+$var reg 1 ( RESULT $end
+$upscope $end
+$scope module outmux $end
+$var wire 8 \" INPUT1 [7:0] $end
+$var wire 8 ]" INPUT2 [7:0] $end
+$var wire 1 6 SELECT $end
+$var reg 8 ^" RESULT [7:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b111 ^"
+b111 ]"
+b11100000 \"
+b0 ["
+0Z"
+1Y"
+0X"
+0W"
+b0 V"
+0U"
+1T"
+0S"
+0R"
+b0 Q"
+0P"
+1O"
+0N"
+0M"
+b0 L"
+0K"
+0J"
+0I"
+0H"
+b0 G"
+0F"
+1E"
+0D"
+0C"
+b0 B"
+0A"
+1@"
+0?"
+0>"
+b0 ="
+0<"
+1;"
+0:"
+09"
+18"
+07"
+06"
+15"
+14"
+03"
+12"
+11"
+10"
+1/"
+1."
+1-"
+1,"
+0+"
+0*"
+1)"
+1("
+0'"
+0&"
+1%"
+1$"
+1#"
+1""
+1!"
+1~
+0}
+0|
+1{
+1z
+0y
+0x
+1w
+1v
+1u
+1t
+1s
+0r
+0q
+0p
+0o
+0n
+0m
+0l
+0k
+0j
+1i
+0h
+1g
+0f
+0e
+0d
+0c
+0b
+0a
+0`
+0_
+1^
+0]
+0\
+0[
+0Z
+0Y
+0X
+0W
+0V
+0U
+0T
+1S
+0R
+0Q
+0P
+0O
+0N
+0M
+0L
+0K
+0J
+1I
+0H
+0G
+b11100000 F
+0E
+b0 D
+b11100000 C
+0B
+0A
+0@
+0?
+0>
+0=
+0<
+1;
+0:
+b11110000 9
+b11110000 8
+b1111 7
+16
+b0 5
+b11110000 4
+b11100000 3
+b11100000 2
+b11100000 1
+b11100000 0
+b111 /
+0.
+0-
+0,
+0+
+0*
+0)
+0(
+b0 '
+b1 &
+b1111 %
+b0 $
+b1 #
+b1111 "
+b111 !
+$end
+#5
+b0 !
+b0 /
+b0 ^"
+b0 ]"
+b0 0
+b0 F
+b0 \"
+1E
+b1001 #
+b1001 &
+#10
+b1 $
+b1 '
+b1 ="
+b1 B"
+b1 G"
+b1 L"
+b1 Q"
+b1 V"
+b1 ["
+#15
+b11100001 3
+b11100001 C
+1B
+1@
+1p
+b11100001 1
+1?
+1=
+1V
+b10000111 !
+b10000111 /
+b10000111 ^"
+b10000111 ]"
+b11100001 2
+1<
+b11100001 0
+b11100001 F
+b11100001 \"
+1.
+1-
+1,
+1*
+1)
+1(
+b11100001 5
+b11100001 D
+b10 $
+b10 '
+b10 ="
+b10 B"
+b10 G"
+b10 L"
+b10 Q"
+b10 V"
+b10 ["
+#20
+1[
+0,"
+1r
+1P
+0~
+1f
+08"
+05"
+0Y"
+0)"
+0T"
+0{
+0O"
+1Y
+1*"
+1o
+1J"
+1N
+1|
+1d
+16"
+b11110 3
+b11110 C
+0B
+04"
+0("
+0z
+1X
+1n
+1M
+1c
+0@
+0p
+01"
+0E"
+0%"
+0@"
+0w
+02"
+1k
+1&"
+1`
+1x
+1U
+1l
+1K
+1a
+b11110 1
+0?
+00"
+0$"
+0v
+1j
+1_
+1T
+1J
+0=
+0V
+b0 ]"
+0."
+0-"
+0""
+0!"
+0t
+0s
+1h
+0g
+1]
+1\
+1R
+1Q
+1H
+1G
+1:
+0;"
+b11110 2
+0<
+b0 0
+b0 F
+b0 \"
+b1111 4
+b1111 9
+b0 !
+b0 /
+b0 ^"
+0.
+0-
+0,
+0*
+0)
+0(
+b0 5
+b0 D
+06
+b11 $
+b11 '
+b11 ="
+b11 B"
+b11 G"
+b11 L"
+b11 Q"
+b11 V"
+b11 ["
+#30
