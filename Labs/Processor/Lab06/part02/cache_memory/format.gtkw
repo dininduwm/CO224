@@ -1,0 +1,65 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sat Jun  6 14:23:53 2020
+[*]
+[dumpfile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part02/cache_memory/cache_wavedata.vcd"
+[dumpfile_mtime] "Sat Jun  6 14:18:43 2020"
+[dumpfile_size] 2505
+[savefile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part02/cache_memory/format.gtkw"
+[timestart] 0
+[size] 1440 863
+[pos] -1 -1
+*-5.364396 57 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testbenchCPU.
+[treeopen] testbenchCPU.myCacheMemory.
+[sst_width] 282
+[signals_width] 239
+[sst_expanded] 1
+[sst_vpaned_height] 236
+@28
+testbenchCPU.CLK
+testbenchCPU.RESET
+@22
+testbenchCPU.ADDRESS[7:0]
+testbenchCPU.READ_DATA[7:0]
+testbenchCPU.WRITE_DATA[7:0]
+@28
+testbenchCPU.memReadEn
+testbenchCPU.memWriteEn
+@200
+-
+@28
+testbenchCPU.myCacheMemory.state[1:0]
+testbenchCPU.myCacheMemory.next_state[1:0]
+testbenchCPU.myCacheMemory.read
+testbenchCPU.myCacheMemory.write
+testbenchCPU.myCacheMemory.CURRENT_DIRTY
+testbenchCPU.myCacheMemory.CURRENT_VALID
+testbenchCPU.myCacheMemory.TAG_MATCH
+@22
+testbenchCPU.myCacheMemory.tempory_data[7:0]
+@200
+-
+-Main Memory
+@28
+testbenchCPU.myCacheMemory.myDataMem.read
+@22
+testbenchCPU.myCacheMemory.myDataMem.readdata[31:0]
+@28
+testbenchCPU.myCacheMemory.myDataMem.write
+@22
+testbenchCPU.myCacheMemory.myDataMem.writedata[31:0]
+@28
+testbenchCPU.myCacheMemory.myDataMem.busywait
+@22
+testbenchCPU.myCacheMemory.myDataMem.address[5:0]
+@200
+-
+-Decoding stage
+@28
+testbenchCPU.myCacheMemory.tag[2:0]
+testbenchCPU.myCacheMemory.index[2:0]
+@29
+testbenchCPU.myCacheMemory.offset[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

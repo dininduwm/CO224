@@ -44,7 +44,7 @@ end
 always @(posedge clock)
 begin
 	if(readaccess)
-	begin
+	begin		
 		readdata[7:0]   = #40 memory_array[{address,2'b00}];
 		readdata[15:8]  = #40 memory_array[{address,2'b01}];
 		readdata[23:16] = #40 memory_array[{address,2'b10}];
@@ -63,6 +63,8 @@ begin
 	end
 end
 
+integer i;
+
 //Reset memory
 always @(posedge reset)
 begin
@@ -74,6 +76,9 @@ begin
         busywait = 0;
 		readaccess = 0;
 		writeaccess = 0;
+
+		// for testing purpose
+		memory_array[2] = 8'hFF;
     end
 end
 
