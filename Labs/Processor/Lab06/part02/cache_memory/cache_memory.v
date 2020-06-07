@@ -99,9 +99,14 @@ module cache_memory(
                     next_state = MEM_WRITE;
                 else   
                     begin 
-                        next_state = IDLE;
+                        //next_state = IDLE;
                         validBit_array[index] = 1'b1; // set the valid bit after loading data
                         dirtyBit_array[index] = 1'b0; // set the valid bit after writing data
+
+                        if (CURRENT_VALID && !TAG_MATCH)
+                            next_state = MEM_READ;
+                        else
+                            next_state = IDLE;
                     end
             
         endcase
@@ -196,13 +201,10 @@ module cache_memory(
     integer i;
 
     // sequential logic for state transitioning 
-    always @(posedge clock, reset)
+    always @(posedge reset)
     begin
         if(reset)
         begin
-            state = IDLE;
-            next_state = IDLE;
-            //busywait = 1'b0;
             for (i=0;i<8; i=i+1) // resetting the registers
                 begin
                     data_array[i] = 0;
@@ -210,8 +212,15 @@ module cache_memory(
                     dirtyBit_array[i] = 0;
                 end
         end
-        else
+    end
+
+    // state change logic
+    always @ (posedge clock)
+    begin
+        if (!reset)
             state = next_state;
+        else
+            state = IDLE;
     end
 
     /* Cache Controller FSM End */
