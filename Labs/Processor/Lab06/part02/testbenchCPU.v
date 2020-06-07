@@ -5,6 +5,7 @@ Reg No - E/16/366
 
 `include "cpu.v"
 `include "data_memory.v"
+`include "cache_memory.v"
 
 module testbenchCPU;
     
@@ -19,9 +20,26 @@ module testbenchCPU;
     wire [7:0] ADDRESS; // address of the data memory
     wire [7:0] READ_DATA, WRITE_DATA; // read and write data of the memory module
     wire BUSY_WAIT; // busy wait signal of the CPU
+
+    // connections to connect main memory to the cache memory
+    wire              MAIN_MEM_READ;
+    wire              MAIN_MEM_WRITE;
+    wire[5:0]         MAIN_MEM_ADDRESS;
+    wire[31:0]        MAIN_MEM_WRITE_DATA;
+    wire[31:0]        MAIN_MEM_READ_DATA;
+    wire              MAIN_MEM_BUSY_WAIT;
     
     cpu mycpu(PC, INS, CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT); //initialize the cpu
-    data_memory myDataMemory(CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT); // initialize the memory module
+    cache_memory myCacheMemory(CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT,
+              MAIN_MEM_READ, 
+              MAIN_MEM_WRITE, 
+              MAIN_MEM_ADDRESS,
+              MAIN_MEM_WRITE_DATA, 
+              MAIN_MEM_READ_DATA, 
+              MAIN_MEM_BUSY_WAIT); // initialize the memory module   
+
+    data_memory myDataMem (CLK, RESET, MAIN_MEM_READ, MAIN_MEM_WRITE, MAIN_MEM_ADDRESS,
+            MAIN_MEM_WRITE_DATA, MAIN_MEM_READ_DATA, MAIN_MEM_BUSY_WAIT);
 
     initial // instruction array
     begin
@@ -118,7 +136,7 @@ module testbenchCPU;
         #4
         RESET = 1'b0;
 
-        #260
+        #300
         $finish;
     end
     
