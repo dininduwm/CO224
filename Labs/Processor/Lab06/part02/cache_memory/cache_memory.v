@@ -33,6 +33,8 @@ module cache_memory(
 
     // variables to handle state changes
     reg CURRENT_DIRTY, CURRENT_VALID, TAG_MATCH;
+    reg [2:0] CURRENT_TAG;
+    reg [31:0] CURRENT_DATA;
 
     // tempory variable to hold the data from the cache
     reg [7:0] tempory_data;
@@ -55,18 +57,27 @@ module cache_memory(
     assign index = address[4:2];
     assign offset = address[1:0];
 
+    //Detecting an incoming memory access
+    reg readaccess, writeaccess;
+    always @(read, write)
+    begin
+        busywait = (read || write)? 1 : 0;
+        readaccess = (read && !write)? 1 : 0;
+        writeaccess = (!read && write)? 1 : 0;
+    end
+
     // combinational next state logic
     always @(*)
     begin
         case (state)
             IDLE:
-                if (!CURRENT_VALID && ((read && !write) || (!read && write))) 
+                if (!CURRENT_VALID && (readaccess || writeaccess)) 
                     next_state = MEM_READ;
-                else if (CURRENT_VALID && TAG_MATCH && ((read && !write) || (!read && write)))
+                else if (CURRENT_VALID && TAG_MATCH && (readaccess || writeaccess))
                     next_state = IDLE;
-                else if (CURRENT_VALID && !CURRENT_DIRTY && !TAG_MATCH && ((read && !write) || (!read && write)))
+                else if (CURRENT_VALID && !CURRENT_DIRTY && !TAG_MATCH && (readaccess || writeaccess))
                     next_state = MEM_READ;
-                else if (CURRENT_VALID && CURRENT_DIRTY && !TAG_MATCH && ((read && !write) || (!read && write)))
+                else if (CURRENT_VALID && CURRENT_DIRTY && !TAG_MATCH && (readaccess || writeaccess))
                     next_state = MEM_WRITE;
             
             MEM_READ:
@@ -107,16 +118,19 @@ module cache_memory(
                 MAIN_MEM_READ = 1'b0;
                 MAIN_MEM_WRITE = 1'b0;               
                 
-                #1
-                if (tag_array[index] == tag) // tag comparisan
-                TAG_MATCH = 1'b1;
-                else
-                TAG_MATCH = 1'b0;
-
+                #1 // loading the current values
                 CURRENT_VALID = validBit_array[index];
                 CURRENT_DIRTY = dirtyBit_array[index];
+                CURRENT_DATA  = data_array[index];
+                CURRENT_TAG   = tag_array[index];
 
-                if (read) // detect the idle read status
+                #1
+                if (CURRENT_TAG == tag) // tag comparisan
+                    TAG_MATCH = 1'b1;
+                else
+                    TAG_MATCH = 1'b0;
+
+                if (readaccess) // detect the idle read status
                 begin
                   // fetching data
                   case(offset)
@@ -129,16 +143,15 @@ module cache_memory(
                     2'b11:
                         tempory_data = data_array[index][31:24];
                   endcase
-
-                  #1 
+                  
                   if (TAG_MATCH && CURRENT_VALID)
                   begin
-                    // TODO: Set the busy wait to 0
+                    busywait = 1'b0; // set the busy wait signal to zero
                     readdata = tempory_data; // output the data
                   end
                 end
 
-                if (write && TAG_MATCH && CURRENT_VALID) // detect the idle write status
+                if (writeaccess && TAG_MATCH && CURRENT_VALID) // detect the idle write status
                 begin
                   #1
                   case(offset) // writing to the register
@@ -153,6 +166,8 @@ module cache_memory(
                   endcase
 
                   dirtyBit_array[index] = 1'b1; // set the dirty bit because data is not consistant with the memory
+                  
+                  busywait = 1'b0; // set the busy wait signal to zero
                 end
                 
             end
@@ -187,7 +202,7 @@ module cache_memory(
         begin
             state = IDLE;
             next_state = IDLE;
-            busywait = 1'b0;
+            //busywait = 1'b0;
             for (i=0;i<8; i=i+1) // resetting the registers
                 begin
                     data_array[i] = 0;
