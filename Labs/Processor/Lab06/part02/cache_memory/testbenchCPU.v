@@ -4,6 +4,7 @@ Reg No - E/16/366
 */
 
 `include "cache_memory.v"
+`include "data_memory.v"
 
 module testbenchCPU;
     
@@ -19,8 +20,25 @@ module testbenchCPU;
     reg [7:0] WRITE_DATA; // read and write data of the memory module
     wire [7:0] READ_DATA;
     wire BUSY_WAIT; // busy wait signal of the CPU
+
+    wire              MAIN_MEM_READ;
+    wire              MAIN_MEM_WRITE;
+    wire[5:0]         MAIN_MEM_ADDRESS;
+    wire[31:0]        MAIN_MEM_WRITE_DATA;
+    wire[31:0]        MAIN_MEM_READ_DATA;
+    wire              MAIN_MEM_BUSY_WAIT;
     
-    cache_memory myCacheMemory(CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT); // initialize the memory module
+    cache_memory myCacheMemory(CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT,
+              MAIN_MEM_READ, 
+              MAIN_MEM_WRITE, 
+              MAIN_MEM_ADDRESS,
+              MAIN_MEM_WRITE_DATA, 
+              MAIN_MEM_READ_DATA, 
+              MAIN_MEM_BUSY_WAIT); // initialize the memory module    
+
+    //initiating the memory module
+    data_memory myDataMem (CLK, RESET, MAIN_MEM_READ, MAIN_MEM_WRITE, MAIN_MEM_ADDRESS,
+            MAIN_MEM_WRITE_DATA, MAIN_MEM_READ_DATA, MAIN_MEM_BUSY_WAIT);
 
     initial // instruction array
     begin

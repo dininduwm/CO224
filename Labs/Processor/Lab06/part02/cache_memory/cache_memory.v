@@ -1,5 +1,3 @@
-`include "data_memory.v"
-
 module cache_memory(
 	clock,
     reset,
@@ -8,7 +6,13 @@ module cache_memory(
     address,
     writedata,
     readdata,
-	busywait
+	busywait,
+    MAIN_MEM_READ, 
+    MAIN_MEM_WRITE, 
+    MAIN_MEM_ADDRESS,
+    MAIN_MEM_WRITE_DATA, 
+    MAIN_MEM_READ_DATA, 
+    MAIN_MEM_BUSY_WAIT
 );
     input				clock;
     input           	reset;
@@ -18,6 +22,14 @@ module cache_memory(
     input[7:0]     	    writedata;
     output reg [7:0]	readdata;
     output reg      	busywait;
+
+    // main memory input outputs
+    output              MAIN_MEM_READ;
+    output              MAIN_MEM_WRITE;
+    output[5:0]         MAIN_MEM_ADDRESS;
+    output[31:0]        MAIN_MEM_WRITE_DATA;
+    input[31:0]         MAIN_MEM_READ_DATA;
+    input               MAIN_MEM_BUSY_WAIT;
 
     //Declare cache memory array 256x8-bits 
     reg [31:0] data_array [8:0];
@@ -47,8 +59,8 @@ module cache_memory(
     wire MAIN_MEM_BUSY_WAIT;
 
     //initiating the memory module
-    data_memory myDataMem (clock, reset, MAIN_MEM_READ, MAIN_MEM_WRITE, MAIN_MEM_ADDRESS,
-            MAIN_MEM_WRITE_DATA, MAIN_MEM_READ_DATA, MAIN_MEM_BUSY_WAIT);
+    //data_memory myDataMem (clock, reset, MAIN_MEM_READ, MAIN_MEM_WRITE, MAIN_MEM_ADDRESS,
+    //        MAIN_MEM_WRITE_DATA, MAIN_MEM_READ_DATA, MAIN_MEM_BUSY_WAIT);
 
     // decoding the address
     wire [2:0] tag, index;
