@@ -136,7 +136,7 @@ module testbenchCPU;
         #4
         RESET = 1'b0;
 
-        #300
+        #350
         $finish;
     end
     

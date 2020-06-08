@@ -85,7 +85,11 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     always @ (posedge CLK)
     begin
       if (RESET == 1'b1) PC = -4; // rest the pc counter
-      else if (!BUSY_WAIT) #1 PC = PCNEXT;        // increment the pc
+      else 
+        begin
+          #1
+          if (!BUSY_WAIT) PC = PCNEXT;        // increment the pc
+        end
     end
 
     always @ (*)

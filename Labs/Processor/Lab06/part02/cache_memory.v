@@ -58,6 +58,9 @@ module cache_memory(
     wire [31:0] MAIN_MEM_READ_DATA;
     wire MAIN_MEM_BUSY_WAIT;
 
+    reg readCache; // reg to remember the read to cache signal until the posedge
+    reg writeCache; // reg to write the write cache signal until the posedge 
+
     //initiating the memory module
     //data_memory myDataMem (clock, reset, MAIN_MEM_READ, MAIN_MEM_WRITE, MAIN_MEM_ADDRESS,
     //        MAIN_MEM_WRITE_DATA, MAIN_MEM_READ_DATA, MAIN_MEM_BUSY_WAIT);
@@ -151,42 +154,28 @@ module cache_memory(
 
                     if (readaccess) // detect the idle read status
                     begin
-                    // fetching data
-                    case(offset)
-                        2'b00:
-                            tempory_data = data_array[index][7:0];
-                        2'b01:
-                            tempory_data = data_array[index][15:8];
-                        2'b10:
-                            tempory_data = data_array[index][23:16];
-                        2'b11:
-                            tempory_data = data_array[index][31:24];
-                    endcase
-                    
-                    if (TAG_MATCH && CURRENT_VALID)
-                    begin
-                        busywait = 1'b0; // set the busy wait signal to zero
-                        readdata = tempory_data; // output the data
-                    end
+                        // fetching data
+                        case(offset)
+                            2'b00:
+                                tempory_data = data_array[index][7:0];
+                            2'b01:
+                                tempory_data = data_array[index][15:8];
+                            2'b10:
+                                tempory_data = data_array[index][23:16];
+                            2'b11:
+                                tempory_data = data_array[index][31:24];
+                        endcase
+                        
+                        if (TAG_MATCH && CURRENT_VALID)
+                        begin
+                            readCache = 1'b1; // set read cache memory to high
+                            readdata = tempory_data; // output the data
+                        end
                     end
 
                     if (writeaccess && TAG_MATCH && CURRENT_VALID) // detect the idle write status
-                    begin
-                    #1
-                    case(offset) // writing to the register
-                        2'b00:
-                            data_array[index][7:0] = writedata;
-                        2'b01:
-                            data_array[index][15:8] = writedata;
-                        2'b10:
-                            data_array[index][23:16] = writedata;
-                        2'b11:
-                            data_array[index][31:24] = writedata;
-                    endcase
-
-                    dirtyBit_array[index] = 1'b1; // set the dirty bit because data is not consistant with the memory
-                    
-                    busywait = 1'b0; // set the busy wait signal to zero
+                    begin                       
+                        writeCache = 1'b1; // set write to cache memory to high
                     end
                     
                 end
@@ -240,6 +229,34 @@ module cache_memory(
                 state = IDLE;
                 next_state = IDLE;
             end
+    end
+
+    // to deassert and write back to the posedge
+    always @ (posedge clock)
+    begin
+        if (writeCache || readCache)
+        begin
+            busywait = 1'b0; // set the busy wait signal to zero
+            readCache = 1'b0; // pull the read signal to low
+        end
+
+        if (writeCache) 
+        begin
+            #1
+            case(offset) // writing to the register
+                2'b00:
+                    data_array[index][7:0] = writedata;
+                2'b01:
+                    data_array[index][15:8] = writedata;
+                2'b10:
+                    data_array[index][23:16] = writedata;
+                2'b11:
+                    data_array[index][31:24] = writedata;
+            endcase
+
+            dirtyBit_array[index] = 1'b1; // set the dirty bit because data is not consistant with the memory
+            writeCache = 1'b0; // pull the write signal to low
+        end
     end
 
     /* Cache Controller FSM End */

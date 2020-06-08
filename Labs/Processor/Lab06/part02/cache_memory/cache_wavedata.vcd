@@ -1,5 +1,5 @@
 $date
-	Sun Jun  7 19:32:03 2020
+	Mon Jun  8 22:41:59 2020
 $end
 $version
 	Icarus Verilog
@@ -45,43 +45,47 @@ $var reg 32 : MAIN_MEM_WRITE_DATA [31:0] $end
 $var reg 1 ; TAG_MATCH $end
 $var reg 1 ( busywait $end
 $var reg 2 < next_state [1:0] $end
-$var reg 1 = readaccess $end
-$var reg 8 > readdata [7:0] $end
-$var reg 2 ? state [1:0] $end
-$var reg 8 @ tempory_data [7:0] $end
-$var reg 1 A writeaccess $end
-$var integer 32 B i [31:0] $end
+$var reg 1 = readCache $end
+$var reg 1 > readaccess $end
+$var reg 8 ? readdata [7:0] $end
+$var reg 2 @ state [1:0] $end
+$var reg 8 A tempory_data [7:0] $end
+$var reg 1 B writeCache $end
+$var reg 1 C writeaccess $end
+$var integer 32 D i [31:0] $end
 $upscope $end
 $scope module myDataMem $end
-$var wire 6 C address [5:0] $end
+$var wire 6 E address [5:0] $end
 $var wire 1 * clock $end
 $var wire 1 % read $end
 $var wire 1 + reset $end
 $var wire 1 # write $end
-$var wire 32 D writedata [31:0] $end
+$var wire 32 F writedata [31:0] $end
 $var reg 1 & busywait $end
-$var reg 1 E readaccess $end
-$var reg 32 F readdata [31:0] $end
-$var reg 1 G writeaccess $end
-$var integer 32 H i [31:0] $end
+$var reg 1 G readaccess $end
+$var reg 32 H readdata [31:0] $end
+$var reg 1 I writeaccess $end
+$var integer 32 J i [31:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-b100000000 H
+b100000000 J
+0I
+bx H
 0G
 bx F
-0E
-bx D
-bx C
-b1000 B
-xA
-bx @
-b0 ?
-bx >
+bx E
+b1000 D
+xC
+xB
+bx A
+b0 @
+bx ?
+x>
 x=
-bx <
+b0 <
 x;
 bx :
 bx 9
@@ -101,25 +105,26 @@ bx ,
 1+
 1*
 bx )
-x(
+0(
 bx '
 0&
-0%
+x%
 bx $
-0#
+x#
 bx "
 bx !
 $end
 #1
 0+
 #2
-1A
-0=
+0#
+0%
+1C
+0>
 1(
 b0 1
 b0 3
 b1 2
-0;
 1.
 0-
 b11111010 ,
@@ -132,16 +137,17 @@ b0 5
 06
 08
 #4
+0;
 0*
 #8
-1E
+1G
 1&
 b0 '
 b0 9
-b0 C
+b0 E
 1%
 b1 <
-b1 ?
+b1 @
 1*
 #12
 0*
@@ -169,7 +175,7 @@ b1 ?
 1*
 bx00000000 $
 bx00000000 4
-bx00000000 F
+bx00000000 H
 #60
 0*
 #64
@@ -192,7 +198,7 @@ bx00000000 F
 1*
 bx0000000000000000 $
 bx0000000000000000 4
-bx0000000000000000 F
+bx0000000000000000 H
 #100
 0*
 #104
@@ -215,7 +221,7 @@ bx0000000000000000 F
 1*
 bx111111110000000000000000 $
 bx111111110000000000000000 4
-bx111111110000000000000000 F
+bx111111110000000000000000 H
 #140
 0*
 #144
@@ -236,51 +242,60 @@ bx111111110000000000000000 F
 0*
 #176
 0%
-b0 ?
+b0 @
 b1 <
 1*
-0E
+0G
 0&
 b111111110000000000000000 $
 b111111110000000000000000 4
-b111111110000000000000000 F
+b111111110000000000000000 H
 #177
 b0 7
 b111111110000000000000000 5
 18
 #178
 b0 <
+1B
 1;
-#179
-0(
 #180
 0*
 #184
+0=
+0(
 1*
+#185
+0B
+#186
+b111111111111101000000000 5
+16
+#187
+1B
 #188
 0*
 #192
 1*
+#193
+0B
 #196
 0*
 #200
 1*
 #202
-0A
-1=
+0C
+1>
 1(
 0.
 1-
-#203
-b111111111111101000000000 5
-16
 #204
 b11111010 !
-b11111010 >
-0(
-b11111010 @
+b11111010 ?
+1=
+b11111010 A
 0*
 #208
+0=
+0(
 1*
 #212
 0*
@@ -293,8 +308,8 @@ b11111010 @
 #228
 0*
 #232
-1A
-0=
+1C
+0>
 1(
 b1 1
 1*
@@ -308,14 +323,14 @@ b10 <
 #236
 0*
 #240
-1G
+1I
 1&
 b111111111111101000000000 "
 b111111111111101000000000 :
-b111111111111101000000000 D
+b111111111111101000000000 F
 1#
 b10 <
-b10 ?
+b10 @
 1*
 #244
 0*
@@ -400,16 +415,16 @@ b10 ?
 #404
 0*
 #408
-1E
+1G
 b1000 '
 b1000 9
-b1000 C
+b1000 E
 0#
 1%
-b1 ?
+b1 @
 b1 <
 1*
-0G
+0I
 1&
 #412
 0*
@@ -477,7 +492,7 @@ b1 <
 1*
 b0 $
 b0 4
-b0 F
+b0 H
 #540
 0*
 #544
@@ -498,10 +513,10 @@ b0 F
 0*
 #576
 0%
-b0 ?
+b0 @
 b10 <
 1*
-0E
+0G
 0&
 #577
 b1 <
@@ -510,17 +525,26 @@ b0 5
 06
 #578
 b0 <
+1B
 1;
-#579
-0(
 #580
 0*
 #584
+0(
 1*
+#585
+0B
+#586
+b1111101000000000 5
+16
+#587
+1B
 #588
 0*
 #592
 1*
+#593
+0B
 #596
 0*
 #600
