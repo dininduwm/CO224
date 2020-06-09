@@ -57,7 +57,8 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     adder jumpadder (PCINCBY4, {{22{DESTINATION[7]}}, DESTINATION, 2'b00}, PCJUMP); //adder for the jump instruction
     
     //and gate for the write enable signal to deactivate when busy wait
-    and a_reg(regWRITEEN_FIN, regWRITEEN, ~BUSY_WAIT);
+    //and a_reg(regWRITEEN_FIN, regWRITEEN, ~BUSY_WAIT);
+    assign regWRITEEN_FIN = regWRITEEN && ~BUSY_WAIT;
 
     //beq and j instructions
     wire ANDOUTBEQ, ANDOUTBNE; //out wire for the and gate
@@ -83,7 +84,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     assign ALOP2 = REGOUT1; //connect regout1 with the alu oparand 2
 
     always @ (posedge CLK)
-    begin
+    begin      
       if (RESET == 1'b1) PC = -4; // rest the pc counter
       else 
         begin

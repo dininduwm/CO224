@@ -174,7 +174,7 @@ module cache_memory(
                     end
 
                     if (writeaccess && TAG_MATCH && CURRENT_VALID) // detect the idle write status
-                    begin                       
+                    begin                                               
                         writeCache = 1'b1; // set write to cache memory to high
                     end
                     
@@ -234,9 +234,9 @@ module cache_memory(
     // to deassert and write back to the posedge
     always @ (posedge clock)
     begin
-        if (writeCache || readCache)
-        begin
-            busywait = 1'b0; // set the busy wait signal to zero
+        if (readCache || writeCache )
+        begin       
+            busywait = 1'b0; // set the busy wait signal to zero     
             readCache = 1'b0; // pull the read signal to low
         end
 
