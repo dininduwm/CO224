@@ -97,16 +97,9 @@ module cache_memory(
             
             MEM_READ:
                 if (MAIN_MEM_BUSY_WAIT)
-                    next_state = MEM_READ;
-                else    
-                    begin
-                        next_state = IDLE;
-                        // put the read data to the cache
-                        data_array[index] = MAIN_MEM_READ_DATA;
-                        tag_array[index] = tag;
-                        validBit_array[index] = 1'b1; // set the valid bit after loading data
-                        dirtyBit_array[index] = 1'b0; // set the dirty bit after loading data
-                    end
+                    next_state = MEM_READ; 
+                else
+                    next_state = IDLE;               
 
 
             MEM_WRITE:
@@ -115,9 +108,6 @@ module cache_memory(
                 else   
                     begin 
                         //next_state = IDLE;
-                        validBit_array[index] = 1'b1; // set the valid bit after loading data
-                        dirtyBit_array[index] = 1'b0; // set the valid bit after writing data
-
                         if (CURRENT_VALID && !TAG_MATCH)
                             next_state = MEM_READ;
                         else
@@ -174,7 +164,7 @@ module cache_memory(
                     end
 
                     if (writeaccess && TAG_MATCH && CURRENT_VALID) // detect the idle write status
-                    begin                       
+                    begin                                               
                         writeCache = 1'b1; // set write to cache memory to high
                     end
                     
@@ -186,6 +176,14 @@ module cache_memory(
                     MAIN_MEM_WRITE = 1'b0;
                     // set the address to teh main memory
                     MAIN_MEM_ADDRESS = {tag, index};
+                    if (!MAIN_MEM_BUSY_WAIT)    
+                    begin
+                        // put the read data to the cache
+                        data_array[index] = MAIN_MEM_READ_DATA;
+                        tag_array[index] = tag;
+                        validBit_array[index] = 1'b1; // set the valid bit after loading data
+                        dirtyBit_array[index] = 1'b0; // set the dirty bit after loading data
+                    end
                 end
 
                 MEM_WRITE: 
@@ -193,9 +191,14 @@ module cache_memory(
                     MAIN_MEM_READ = 1'b0;
                     MAIN_MEM_WRITE = 1'b1;
                     // set the address to the main memory
-                    MAIN_MEM_ADDRESS = tag_array[index];
+                    MAIN_MEM_ADDRESS = {tag_array[index], index};
                     // set data to be written
                     MAIN_MEM_WRITE_DATA = data_array[index];
+                    if (!MAIN_MEM_BUSY_WAIT)
+                    begin
+                        validBit_array[index] = 1'b1; // set the valid bit after loading data
+                        dirtyBit_array[index] = 1'b0; // set the valid bit after writing data
+                    end
                 end
                 
             endcase
@@ -234,9 +237,9 @@ module cache_memory(
     // to deassert and write back to the posedge
     always @ (posedge clock)
     begin
-        if (writeCache || readCache)
-        begin
-            busywait = 1'b0; // set the busy wait signal to zero
+        if ((readCache || writeCache) && TAG_MATCH)
+        begin       
+            busywait = 1'b0; // set the busy wait signal to zero     
             readCache = 1'b0; // pull the read signal to low
         end
 

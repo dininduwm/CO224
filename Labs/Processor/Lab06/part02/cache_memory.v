@@ -191,7 +191,7 @@ module cache_memory(
                     MAIN_MEM_READ = 1'b0;
                     MAIN_MEM_WRITE = 1'b1;
                     // set the address to the main memory
-                    MAIN_MEM_ADDRESS = tag_array[index];
+                    MAIN_MEM_ADDRESS = {tag_array[index], index};
                     // set data to be written
                     MAIN_MEM_WRITE_DATA = data_array[index];
                     if (!MAIN_MEM_BUSY_WAIT)
@@ -237,7 +237,7 @@ module cache_memory(
     // to deassert and write back to the posedge
     always @ (posedge clock)
     begin
-        if (readCache || writeCache )
+        if ((readCache || writeCache) && TAG_MATCH)
         begin       
             busywait = 1'b0; // set the busy wait signal to zero     
             readCache = 1'b0; // pull the read signal to low
