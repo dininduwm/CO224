@@ -3,6 +3,8 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
+`timescale 1ns/100ps
+
 module mux4to1_1bit(INPUT1, INPUT2, INPUT3, INPUT4, RESULT, SELECT);
     input INPUT1, INPUT2, INPUT3, INPUT4; //declare inputs of the module
     input [1:0] SELECT;               //declare inputs

@@ -1,5 +1,11 @@
+/*
+Author - W M D U Thilakarathna
+Reg No - E/16/366
+*/
+
 `include "mux4to1_1bit.v"
 `include "mux2to1_1bit.v"
+`timescale 1ns/100ps
 
 module barrelShifter(INPUT, OUTPUT, SHIFT, SHIFT_MODE);        
 

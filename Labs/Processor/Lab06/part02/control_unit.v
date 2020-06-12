@@ -3,6 +3,8 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
+`timescale 1ns/100ps
+
 module control_unit(INSTRUCTION, twoscompMUXSEL, immeMUXSEL, regWRITEEN, aluOP, jump, beq, bne, alu_shiftMUXSEL, bShifterOpCode, memReadEn, memWriteEn, memMUXSEL, RESET);
 
     parameter [7:0] ADD   = 8'h00, 

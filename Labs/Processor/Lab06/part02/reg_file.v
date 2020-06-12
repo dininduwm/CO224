@@ -3,6 +3,8 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
+`timescale 1ns/100ps
+
 module reg_file(IN, OUT1, OUT2, INADDRESS, OUT1ADDRESS, OUT2ADDRESS, WRITE, CLK, RESET);
 
 input [7:0] IN;  // 8 bit data input

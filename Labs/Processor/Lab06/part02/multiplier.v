@@ -3,6 +3,8 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
+`timescale 1ns/100ps
+
 module multiplier(DATA1, DATA2, RESULT);
 
 input [7:0] DATA1, DATA2; //declare inputs

@@ -3,6 +3,8 @@ Author - W M D U Thilakarathna
 Reg No - E/16/366
 */
 
+`timescale 1ns/100ps
+
 module mux2to1_32bit(INPUT1, INPUT2, RESULT, SELECT);
     input [31:0] INPUT1, INPUT2; //declare inputs of the module
     input SELECT;               //declare inputs

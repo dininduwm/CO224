@@ -11,6 +11,7 @@ Reg No - E/16/366
 `include "mux2to1_32bit.v"
 `include "adder.v"
 `include "barrelShifter.v"
+`timescale 1ns/100ps
 
 module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, MEMREAD, BUSY_WAIT);
 

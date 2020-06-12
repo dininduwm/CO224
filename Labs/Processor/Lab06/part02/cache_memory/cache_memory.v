@@ -1,3 +1,10 @@
+/*
+Author - W M D U Thilakarathna
+Reg No - E/16/366
+*/
+
+`timescale 1ns/100ps
+
 module cache_memory(
 	clock,
     reset,
@@ -136,7 +143,7 @@ module cache_memory(
                     CURRENT_DATA  = data_array[index];
                     CURRENT_TAG   = tag_array[index];
 
-                    #1
+                    #0.9
                     if (CURRENT_TAG == tag) // tag comparisan
                         TAG_MATCH = 1'b1;
                     else
@@ -161,12 +168,14 @@ module cache_memory(
                             readCache = 1'b1; // set read cache memory to high
                             readdata = tempory_data; // output the data
                         end
+                        else readCache = 1'b0; // set the readCache signal to zero
                     end
 
                     if (writeaccess && TAG_MATCH && CURRENT_VALID) // detect the idle write status
                     begin                                               
                         writeCache = 1'b1; // set write to cache memory to high
                     end
+                    else writeCache = 1'b0; //set the write cache signal to zero
                     
                 end
             
@@ -237,7 +246,7 @@ module cache_memory(
     // to deassert and write back to the posedge
     always @ (posedge clock)
     begin
-        if ((readCache || writeCache) && TAG_MATCH)
+        if (readCache || writeCache)
         begin       
             busywait = 1'b0; // set the busy wait signal to zero     
             readCache = 1'b0; // pull the read signal to low

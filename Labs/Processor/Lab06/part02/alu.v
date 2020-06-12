@@ -4,6 +4,7 @@ Reg No - E/16/366
 */
 
 `include "multiplier.v"
+`timescale 1ns/100ps
 
 module alu(DATA1, DATA2, RESULT, SELECT, COMP);
 
