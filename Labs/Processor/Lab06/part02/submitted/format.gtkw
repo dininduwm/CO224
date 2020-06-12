@@ -1,0 +1,117 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sun Jun  7 14:27:32 2020
+[*]
+[dumpfile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part02/cpu_wavedata.vcd"
+[dumpfile_mtime] "Sun Jun  7 14:20:46 2020"
+[dumpfile_size] 25265
+[savefile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part02/format.gtkw"
+[timestart] 0
+[size] 1440 863
+[pos] -1 -1
+*-3.333148 8 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testbenchCPU.
+[treeopen] testbenchCPU.mycpu.
+[treeopen] testbenchCPU.mycpu.myalu.
+[sst_width] 233
+[signals_width] 260
+[sst_expanded] 1
+[sst_vpaned_height] 298
+@24
+testbenchCPU.CLK
+testbenchCPU.RESET
+@22
+testbenchCPU.INS[31:0]
+testbenchCPU.mycpu.PC[31:0]
+@200
+-Cpu
+@24
+testbenchCPU.mycpu.SOURCE1[7:0]
+testbenchCPU.mycpu.SOURCE2[7:0]
+testbenchCPU.mycpu.DESTINATION[7:0]
+@200
+-Control Unit
+@24
+testbenchCPU.mycpu.mycu.immeMUXSEL
+testbenchCPU.mycpu.mycu.regWRITEEN
+testbenchCPU.mycpu.mycu.twoscompMUXSEL
+@28
+testbenchCPU.mycpu.mycu.jump
+@200
+-ALU
+@28
+testbenchCPU.mycpu.myalu.SELECT[2:0]
+@24
+testbenchCPU.mycpu.myalu.DATA1[7:0]
+testbenchCPU.mycpu.myalu.DATA2[7:0]
+@c00024
+testbenchCPU.mycpu.myalu.RESULT[7:0]
+@28
+(0)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(1)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(2)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(3)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(4)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(5)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(6)testbenchCPU.mycpu.myalu.RESULT[7:0]
+(7)testbenchCPU.mycpu.myalu.RESULT[7:0]
+@1401200
+-group_end
+@200
+-REG File
+@24
+testbenchCPU.mycpu.myreg.CLK
+testbenchCPU.mycpu.myreg.RESET
+testbenchCPU.mycpu.myreg.WRITE
+testbenchCPU.mycpu.myreg.INADDRESS[2:0]
+testbenchCPU.mycpu.myreg.IN[7:0]
+testbenchCPU.mycpu.myreg.OUT1ADDRESS[2:0]
+testbenchCPU.mycpu.myreg.OUT1[7:0]
+testbenchCPU.mycpu.myreg.OUT2ADDRESS[2:0]
+testbenchCPU.mycpu.myreg.OUT2[7:0]
+@200
+-Cache Memory
+@28
+testbenchCPU.myCacheMemory.busywait
+@22
+testbenchCPU.myCacheMemory.address[7:0]
+@28
+testbenchCPU.myCacheMemory.read
+testbenchCPU.myCacheMemory.readaccess
+@22
+testbenchCPU.myCacheMemory.readdata[7:0]
+@28
+testbenchCPU.myCacheMemory.write
+testbenchCPU.myCacheMemory.writeaccess
+@22
+testbenchCPU.myCacheMemory.writedata[7:0]
+@200
+-
+@28
+testbenchCPU.myCacheMemory.state[1:0]
+testbenchCPU.myCacheMemory.next_state[1:0]
+@22
+testbenchCPU.myCacheMemory.CURRENT_DATA[31:0]
+@28
+testbenchCPU.myCacheMemory.CURRENT_DIRTY
+testbenchCPU.myCacheMemory.CURRENT_TAG[2:0]
+testbenchCPU.myCacheMemory.CURRENT_VALID
+testbenchCPU.myCacheMemory.TAG_MATCH
+@200
+-
+-Main Memory
+@22
+testbenchCPU.myDataMem.address[5:0]
+@28
+testbenchCPU.myDataMem.busywait
+testbenchCPU.myDataMem.read
+testbenchCPU.myDataMem.readaccess
+@23
+testbenchCPU.myDataMem.readdata[31:0]
+@28
+testbenchCPU.myDataMem.write
+testbenchCPU.myDataMem.writeaccess
+@22
+testbenchCPU.myDataMem.writedata[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
