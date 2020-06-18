@@ -5,7 +5,7 @@ Reg No - E/16/366
 
 `timescale 1ns/100ps
 
-module cache_memory(
+module data_cache_memory(
 	clock,
     reset,
     read,
