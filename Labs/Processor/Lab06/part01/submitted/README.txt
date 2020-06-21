@@ -28,3 +28,6 @@ loadi 2 0X03
 loadi 3 0xAA
 swd 3 2
 lwd 4 2
+
+Note:
+I have resubmitted this module because in the last lab session we have to change the ALU module because of the triggering issue

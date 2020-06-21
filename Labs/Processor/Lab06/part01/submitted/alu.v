@@ -15,6 +15,14 @@ module alu(DATA1, DATA2, RESULT, SELECT, COMP);
     reg [7:0] RESULT; // declare the outputs as registers
     wire [7:0] MULRESULT; //result of the multiplier module
 
+    wire [7:0] INTER_FWD, INTER_ADD, INTER_AND, INTER_OR; // intermediate signals to hold the calculations
+
+    // assigning the values to the different operations
+    assign #1 INTER_FWD = DATA2; //forward operation  1
+    assign #2 INTER_ADD = DATA1 + DATA2; // add operation 2
+    assign #1 INTER_AND =  DATA1 & DATA2; // bitwise and operation 1
+    assign #1 INTER_OR =  DATA1 | DATA2; // bitwise or operation 1
+
     //initiating multiplier module
     multiplier mul(DATA1, DATA2, MULRESULT); 
 
@@ -22,13 +30,13 @@ module alu(DATA1, DATA2, RESULT, SELECT, COMP);
     begin
         case (SELECT)
         3'b000:
-            #1 RESULT = DATA2; //forward operation  1
+            RESULT = INTER_FWD; 
         3'b001:
-            #2 RESULT = DATA1 + DATA2; // add operation 2
+            RESULT = INTER_ADD; 
         3'b010:
-            #1 RESULT = DATA1 & DATA2; // bitwise and operation 1
+            RESULT = INTER_AND; 
         3'b011:
-            #1 RESULT = DATA1 | DATA2; // bitwise or operation 1
+            RESULT = INTER_OR; 
         3'b100:
             RESULT = MULRESULT; //result of the multiplier
         default: RESULT = 0; //result 0 if the other cases
