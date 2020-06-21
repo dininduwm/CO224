@@ -1,19 +1,19 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Thu Jun 18 08:12:25 2020
+[*] Sun Jun 21 12:39:31 2020
 [*]
 [dumpfile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part03/cpu_wavedata.vcd"
-[dumpfile_mtime] "Thu Jun 18 08:08:40 2020"
-[dumpfile_size] 34770
+[dumpfile_mtime] "Thu Jun 18 08:31:52 2020"
+[dumpfile_size] 61086
 [savefile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part03/format.gtkw"
-[timestart] 1323680
+[timestart] 0
 [size] 1310 704
 [pos] -1 -1
-*-14.187698 1328250 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-19.733362 1328250 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbenchCPU.
 [treeopen] testbenchCPU.mycpu.myalu.
 [sst_width] 295
-[signals_width] 264
+[signals_width] 174
 [sst_expanded] 1
 [sst_vpaned_height] 191
 @24
