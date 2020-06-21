@@ -62,7 +62,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     
     //and gate for the write enable signal to deactivate when busy wait
     //and a_reg(regWRITEEN_FIN, regWRITEEN, ~BUSY_WAIT);
-    assign regWRITEEN_FIN = regWRITEEN && ~BUSY_WAIT;
+    assign regWRITEEN_FIN = regWRITEEN && ~BUSY_WAIT && ~INS_CACHE_BUSY_WAIT;
 
     //beq and j instructions
     wire ANDOUTBEQ, ANDOUTBNE; //out wire for the and gate

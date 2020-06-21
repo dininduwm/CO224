@@ -53,9 +53,8 @@ module testbenchCPU;
     wire[5:0]         INS_MEM_ADDRESS;
     wire[127:0]       INS_MEM_READ_DATA;
     wire              INS_MEM_BUSY_WAIT;
-    wire[31:0]        tmp_READ_DATA;
 
-    ins_cache_memory myInsCacheMemory(CLK, RESET, insReadEn, PC, tmp_READ_DATA, INS_CACHE_BUSY_WAIT,
+    ins_cache_memory myInsCacheMemory(CLK, RESET, insReadEn, PC, INS, INS_CACHE_BUSY_WAIT,
               INS_MEM_READ, 
               INS_MEM_ADDRESS,
               INS_MEM_READ_DATA, 
@@ -161,7 +160,7 @@ module testbenchCPU;
         #4
         RESET = 1'b0;
 
-        #2000
+        #3000
         $finish;
     end
     

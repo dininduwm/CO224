@@ -1,19 +1,19 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Thu Jun 18 07:36:49 2020
+[*] Thu Jun 18 08:12:25 2020
 [*]
 [dumpfile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part03/cpu_wavedata.vcd"
-[dumpfile_mtime] "Thu Jun 18 07:22:32 2020"
-[dumpfile_size] 22752
+[dumpfile_mtime] "Thu Jun 18 08:08:40 2020"
+[dumpfile_size] 34770
 [savefile] "/home/dtdinidu7/Desktop/Achadamic/Semester04/CO224/Labs/Processor/Lab06/part03/format.gtkw"
-[timestart] 0
+[timestart] 1323680
 [size] 1310 704
 [pos] -1 -1
-*-16.769028 33000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-14.187698 1328250 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbenchCPU.
 [treeopen] testbenchCPU.mycpu.myalu.
 [sst_width] 295
-[signals_width] 260
+[signals_width] 264
 [sst_expanded] 1
 [sst_vpaned_height] 191
 @24
@@ -24,18 +24,24 @@ testbenchCPU.INS[31:0]
 testbenchCPU.mycpu.PC[31:0]
 @200
 -Instruction Cache
-@29
-testbenchCPU.myInsCacheMemory.busywait
 @28
+testbenchCPU.myInsCacheMemory.busywait
 testbenchCPU.myInsCacheMemory.read
 testbenchCPU.myInsCacheMemory.readaccess
-@22
+@23
+testbenchCPU.myInsCacheMemory.readdata[31:0]
+@24
 testbenchCPU.myInsCacheMemory.address[31:0]
+@28
+testbenchCPU.myInsCacheMemory.state[1:0]
+testbenchCPU.myInsCacheMemory.next_state[1:0]
+@22
 testbenchCPU.myInsCacheMemory.CURRENT_DATA[31:0]
 @28
 testbenchCPU.myInsCacheMemory.CURRENT_TAG[2:0]
 testbenchCPU.myInsCacheMemory.CURRENT_VALID
 testbenchCPU.myInsCacheMemory.TAG_MATCH
+testbenchCPU.myInsCacheMemory.readCache
 @22
 testbenchCPU.myInsCacheMemory.tempory_data[31:0]
 @200
@@ -47,8 +53,139 @@ testbenchCPU.myInsMem.address[5:0]
 @28
 testbenchCPU.myInsMem.read
 testbenchCPU.myInsMem.readaccess
-@22
+@c00022
 testbenchCPU.myInsMem.readdata[127:0]
+@28
+(0)testbenchCPU.myInsMem.readdata[127:0]
+(1)testbenchCPU.myInsMem.readdata[127:0]
+(2)testbenchCPU.myInsMem.readdata[127:0]
+(3)testbenchCPU.myInsMem.readdata[127:0]
+(4)testbenchCPU.myInsMem.readdata[127:0]
+(5)testbenchCPU.myInsMem.readdata[127:0]
+(6)testbenchCPU.myInsMem.readdata[127:0]
+(7)testbenchCPU.myInsMem.readdata[127:0]
+(8)testbenchCPU.myInsMem.readdata[127:0]
+(9)testbenchCPU.myInsMem.readdata[127:0]
+(10)testbenchCPU.myInsMem.readdata[127:0]
+(11)testbenchCPU.myInsMem.readdata[127:0]
+(12)testbenchCPU.myInsMem.readdata[127:0]
+(13)testbenchCPU.myInsMem.readdata[127:0]
+(14)testbenchCPU.myInsMem.readdata[127:0]
+(15)testbenchCPU.myInsMem.readdata[127:0]
+(16)testbenchCPU.myInsMem.readdata[127:0]
+(17)testbenchCPU.myInsMem.readdata[127:0]
+(18)testbenchCPU.myInsMem.readdata[127:0]
+(19)testbenchCPU.myInsMem.readdata[127:0]
+(20)testbenchCPU.myInsMem.readdata[127:0]
+(21)testbenchCPU.myInsMem.readdata[127:0]
+(22)testbenchCPU.myInsMem.readdata[127:0]
+(23)testbenchCPU.myInsMem.readdata[127:0]
+(24)testbenchCPU.myInsMem.readdata[127:0]
+(25)testbenchCPU.myInsMem.readdata[127:0]
+(26)testbenchCPU.myInsMem.readdata[127:0]
+(27)testbenchCPU.myInsMem.readdata[127:0]
+(28)testbenchCPU.myInsMem.readdata[127:0]
+(29)testbenchCPU.myInsMem.readdata[127:0]
+(30)testbenchCPU.myInsMem.readdata[127:0]
+(31)testbenchCPU.myInsMem.readdata[127:0]
+(32)testbenchCPU.myInsMem.readdata[127:0]
+(33)testbenchCPU.myInsMem.readdata[127:0]
+(34)testbenchCPU.myInsMem.readdata[127:0]
+(35)testbenchCPU.myInsMem.readdata[127:0]
+(36)testbenchCPU.myInsMem.readdata[127:0]
+(37)testbenchCPU.myInsMem.readdata[127:0]
+(38)testbenchCPU.myInsMem.readdata[127:0]
+(39)testbenchCPU.myInsMem.readdata[127:0]
+(40)testbenchCPU.myInsMem.readdata[127:0]
+(41)testbenchCPU.myInsMem.readdata[127:0]
+(42)testbenchCPU.myInsMem.readdata[127:0]
+(43)testbenchCPU.myInsMem.readdata[127:0]
+(44)testbenchCPU.myInsMem.readdata[127:0]
+(45)testbenchCPU.myInsMem.readdata[127:0]
+(46)testbenchCPU.myInsMem.readdata[127:0]
+(47)testbenchCPU.myInsMem.readdata[127:0]
+(48)testbenchCPU.myInsMem.readdata[127:0]
+(49)testbenchCPU.myInsMem.readdata[127:0]
+(50)testbenchCPU.myInsMem.readdata[127:0]
+(51)testbenchCPU.myInsMem.readdata[127:0]
+(52)testbenchCPU.myInsMem.readdata[127:0]
+(53)testbenchCPU.myInsMem.readdata[127:0]
+(54)testbenchCPU.myInsMem.readdata[127:0]
+(55)testbenchCPU.myInsMem.readdata[127:0]
+(56)testbenchCPU.myInsMem.readdata[127:0]
+(57)testbenchCPU.myInsMem.readdata[127:0]
+(58)testbenchCPU.myInsMem.readdata[127:0]
+(59)testbenchCPU.myInsMem.readdata[127:0]
+(60)testbenchCPU.myInsMem.readdata[127:0]
+(61)testbenchCPU.myInsMem.readdata[127:0]
+(62)testbenchCPU.myInsMem.readdata[127:0]
+(63)testbenchCPU.myInsMem.readdata[127:0]
+(64)testbenchCPU.myInsMem.readdata[127:0]
+(65)testbenchCPU.myInsMem.readdata[127:0]
+(66)testbenchCPU.myInsMem.readdata[127:0]
+(67)testbenchCPU.myInsMem.readdata[127:0]
+(68)testbenchCPU.myInsMem.readdata[127:0]
+(69)testbenchCPU.myInsMem.readdata[127:0]
+(70)testbenchCPU.myInsMem.readdata[127:0]
+(71)testbenchCPU.myInsMem.readdata[127:0]
+(72)testbenchCPU.myInsMem.readdata[127:0]
+(73)testbenchCPU.myInsMem.readdata[127:0]
+(74)testbenchCPU.myInsMem.readdata[127:0]
+(75)testbenchCPU.myInsMem.readdata[127:0]
+(76)testbenchCPU.myInsMem.readdata[127:0]
+(77)testbenchCPU.myInsMem.readdata[127:0]
+(78)testbenchCPU.myInsMem.readdata[127:0]
+(79)testbenchCPU.myInsMem.readdata[127:0]
+(80)testbenchCPU.myInsMem.readdata[127:0]
+(81)testbenchCPU.myInsMem.readdata[127:0]
+(82)testbenchCPU.myInsMem.readdata[127:0]
+(83)testbenchCPU.myInsMem.readdata[127:0]
+(84)testbenchCPU.myInsMem.readdata[127:0]
+(85)testbenchCPU.myInsMem.readdata[127:0]
+(86)testbenchCPU.myInsMem.readdata[127:0]
+(87)testbenchCPU.myInsMem.readdata[127:0]
+(88)testbenchCPU.myInsMem.readdata[127:0]
+(89)testbenchCPU.myInsMem.readdata[127:0]
+(90)testbenchCPU.myInsMem.readdata[127:0]
+(91)testbenchCPU.myInsMem.readdata[127:0]
+(92)testbenchCPU.myInsMem.readdata[127:0]
+(93)testbenchCPU.myInsMem.readdata[127:0]
+(94)testbenchCPU.myInsMem.readdata[127:0]
+(95)testbenchCPU.myInsMem.readdata[127:0]
+(96)testbenchCPU.myInsMem.readdata[127:0]
+(97)testbenchCPU.myInsMem.readdata[127:0]
+(98)testbenchCPU.myInsMem.readdata[127:0]
+(99)testbenchCPU.myInsMem.readdata[127:0]
+(100)testbenchCPU.myInsMem.readdata[127:0]
+(101)testbenchCPU.myInsMem.readdata[127:0]
+(102)testbenchCPU.myInsMem.readdata[127:0]
+(103)testbenchCPU.myInsMem.readdata[127:0]
+(104)testbenchCPU.myInsMem.readdata[127:0]
+(105)testbenchCPU.myInsMem.readdata[127:0]
+(106)testbenchCPU.myInsMem.readdata[127:0]
+(107)testbenchCPU.myInsMem.readdata[127:0]
+(108)testbenchCPU.myInsMem.readdata[127:0]
+(109)testbenchCPU.myInsMem.readdata[127:0]
+(110)testbenchCPU.myInsMem.readdata[127:0]
+(111)testbenchCPU.myInsMem.readdata[127:0]
+(112)testbenchCPU.myInsMem.readdata[127:0]
+(113)testbenchCPU.myInsMem.readdata[127:0]
+(114)testbenchCPU.myInsMem.readdata[127:0]
+(115)testbenchCPU.myInsMem.readdata[127:0]
+(116)testbenchCPU.myInsMem.readdata[127:0]
+(117)testbenchCPU.myInsMem.readdata[127:0]
+(118)testbenchCPU.myInsMem.readdata[127:0]
+(119)testbenchCPU.myInsMem.readdata[127:0]
+(120)testbenchCPU.myInsMem.readdata[127:0]
+(121)testbenchCPU.myInsMem.readdata[127:0]
+(122)testbenchCPU.myInsMem.readdata[127:0]
+(123)testbenchCPU.myInsMem.readdata[127:0]
+(124)testbenchCPU.myInsMem.readdata[127:0]
+(125)testbenchCPU.myInsMem.readdata[127:0]
+(126)testbenchCPU.myInsMem.readdata[127:0]
+(127)testbenchCPU.myInsMem.readdata[127:0]
+@1401200
+-group_end
 @200
 -
 -Cpu

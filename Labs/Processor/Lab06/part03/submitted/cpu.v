@@ -13,14 +13,17 @@ Reg No - E/16/366
 `include "barrelShifter.v"
 `timescale 1ns/100ps
 
-module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, MEMREAD, BUSY_WAIT);
+module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, MEMREAD, BUSY_WAIT,
+            insReadEn, INS_CACHE_BUSY_WAIT);
 
     input [31:0] INSTRUCTION; //fetched INSTRUCTIONtructions
     input CLK, RESET; // clock and reset for the cpu
     input BUSY_WAIT; // busy wait signal from the memory
+    input INS_CACHE_BUSY_WAIT; // busy wait from the instruction memory
     input [7:0] MEMREAD; // input from the memory read
     output reg [31:0] PC; //programme counter
     output memReadEn, memWriteEn; // control signal to the data memory
+    output reg insReadEn; // read enable for the instruction read
     output [7:0] ALUOUT, REGOUT1; // output signal to the memory (address and the write data input)
 
     wire [7:0] SOURCE1, SOURCE2, DESTINATION;  //decoded INSTRUCTIONtructons
@@ -59,7 +62,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
     
     //and gate for the write enable signal to deactivate when busy wait
     //and a_reg(regWRITEEN_FIN, regWRITEEN, ~BUSY_WAIT);
-    assign regWRITEEN_FIN = regWRITEEN && ~BUSY_WAIT;
+    assign regWRITEEN_FIN = regWRITEEN && ~BUSY_WAIT && ~INS_CACHE_BUSY_WAIT;
 
     //beq and j instructions
     wire ANDOUTBEQ, ANDOUTBNE; //out wire for the and gate
@@ -86,11 +89,20 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, ALUOUT, REGOUT1, 
 
     always @ (posedge CLK)
     begin      
-      if (RESET == 1'b1) PC = -4; // rest the pc counter
+      if (RESET == 1'b1) 
+          begin
+            PC = -4; // rest the pc counter
+            insReadEn = 1'b0; // disable the read enable signal of the instruction memory
+          end
       else 
         begin
+          insReadEn = 1'b0;
           #1
-          if (!BUSY_WAIT) PC = PCNEXT;        // increment the pc
+          if (!(BUSY_WAIT || INS_CACHE_BUSY_WAIT)) 
+            begin 
+              PC = PCNEXT;        // increment the pc
+              insReadEn = 1'b1; // enable read from the instruction memory
+            end
         end
     end
 

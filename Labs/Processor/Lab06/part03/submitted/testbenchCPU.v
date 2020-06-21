@@ -5,7 +5,9 @@ Reg No - E/16/366
 
 `include "cpu.v"
 `include "data_memory.v"
-`include "cache_memory.v"
+`include "data_cache_memory.v"
+`include "ins_memory.v"
+`include "ins_cache_memory.v"
 `timescale 1ns/100ps
 
 module testbenchCPU;
@@ -13,7 +15,7 @@ module testbenchCPU;
     //input registers
     wire [31:0] INS;
     reg CLK, RESET; 
-    reg [7:0] INST_MEMORY [1023:0] ; //instruction array
+    // reg [7:0] INST_MEMORY [1023:0] ; //instruction array
 
     wire[31:0] PC;
 
@@ -29,9 +31,13 @@ module testbenchCPU;
     wire[31:0]        MAIN_MEM_WRITE_DATA;
     wire[31:0]        MAIN_MEM_READ_DATA;
     wire              MAIN_MEM_BUSY_WAIT;
+
+    wire              INS_CACHE_BUSY_WAIT;
+    wire insReadEn; // read enable for the instruction memory
     
-    cpu mycpu(PC, INS, CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT); //initialize the cpu
-    cache_memory myCacheMemory(CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT,
+    cpu mycpu(PC, INS, CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT, 
+                insReadEn, INS_CACHE_BUSY_WAIT); //initialize the cpu
+    data_cache_memory myCacheMemory(CLK, RESET, memReadEn, memWriteEn, ADDRESS, WRITE_DATA, READ_DATA, BUSY_WAIT,
               MAIN_MEM_READ, 
               MAIN_MEM_WRITE, 
               MAIN_MEM_ADDRESS,
@@ -41,6 +47,21 @@ module testbenchCPU;
 
     data_memory myDataMem (CLK, RESET, MAIN_MEM_READ, MAIN_MEM_WRITE, MAIN_MEM_ADDRESS,
             MAIN_MEM_WRITE_DATA, MAIN_MEM_READ_DATA, MAIN_MEM_BUSY_WAIT);
+
+    // connections to the instruction memory
+    wire              INS_MEM_READ;
+    wire[5:0]         INS_MEM_ADDRESS;
+    wire[127:0]       INS_MEM_READ_DATA;
+    wire              INS_MEM_BUSY_WAIT;
+
+    ins_cache_memory myInsCacheMemory(CLK, RESET, insReadEn, PC, INS, INS_CACHE_BUSY_WAIT,
+              INS_MEM_READ, 
+              INS_MEM_ADDRESS,
+              INS_MEM_READ_DATA, 
+              INS_MEM_BUSY_WAIT); // initialize the memory module   
+
+    ins_memory myInsMem (CLK, INS_MEM_READ, INS_MEM_ADDRESS,
+            INS_MEM_READ_DATA, INS_MEM_BUSY_WAIT);
 
     initial // instruction array
     begin
@@ -54,7 +75,7 @@ module testbenchCPU;
       $dumpvars(0, testbenchCPU);
     end
 
-    assign #2 INS = {INST_MEMORY[PC + 3], INST_MEMORY[PC + 2], INST_MEMORY[PC + 1], INST_MEMORY[PC]}; //fetching instruction
+    // assign #2 INS = {INST_MEMORY[PC + 3], INST_MEMORY[PC + 2], INST_MEMORY[PC + 1], INST_MEMORY[PC]}; //fetching instruction
        
     initial
     begin
@@ -92,7 +113,7 @@ module testbenchCPU;
         {INST_MEMORY[23],INST_MEMORY[22],INST_MEMORY[21],INST_MEMORY[20]} = 32'b00000110111111010000000000000000;
         */
         
-        
+        /*
         // loadi 0 0xFA
         {INST_MEMORY[3],INST_MEMORY[2],INST_MEMORY[1],INST_MEMORY[0]}     = 32'b00000101_000000000000000011111010;
         // sll 1 0 0x02
@@ -123,6 +144,8 @@ module testbenchCPU;
         {INST_MEMORY[55],INST_MEMORY[54],INST_MEMORY[53],INST_MEMORY[52]} = 32'b00010000_00000000_00000011_00000010;
         // lwd 4 2
         {INST_MEMORY[59],INST_MEMORY[58],INST_MEMORY[57],INST_MEMORY[56]} = 32'b00001110_00000100_00000000_00000010;
+        */
+
 
         CLK = 1'b1;
         
@@ -137,7 +160,7 @@ module testbenchCPU;
         #4
         RESET = 1'b0;
 
-        #350
+        #3000
         $finish;
     end
     
