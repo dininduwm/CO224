@@ -51,9 +51,10 @@ module cache_memory(
     reg [1:0] state, next_state;
 
     // variables to handle state changes
-    reg CURRENT_DIRTY, CURRENT_VALID, TAG_MATCH;
+    reg CURRENT_DIRTY, CURRENT_VALID;
     reg [2:0] CURRENT_TAG;
     reg [31:0] CURRENT_DATA;
+    wire TAG_MATCH;
 
     // tempory variable to hold the data from the cache
     reg [7:0] tempory_data;
@@ -66,7 +67,9 @@ module cache_memory(
     wire MAIN_MEM_BUSY_WAIT;
 
     reg readCache; // reg to remember the read to cache signal until the posedge
-    reg writeCache; // reg to write the write cache signal until the posedge 
+    reg writeCache; // reg to write the write cache signal until the posedge
+
+    reg writeCache_mem; // write enable signal to write to the cache mem after a memory read 
 
     //initiating the memory module
     //data_memory myDataMem (clock, reset, MAIN_MEM_READ, MAIN_MEM_WRITE, MAIN_MEM_ADDRESS,
@@ -78,6 +81,39 @@ module cache_memory(
     assign tag = address[7:5];
     assign index = address[4:2];
     assign offset = address[1:0];
+
+    // loading data 
+    always @ (*)
+    begin
+        #1 // loading the current values
+        CURRENT_VALID = validBit_array[index];
+        CURRENT_DIRTY = dirtyBit_array[index];
+        CURRENT_DATA  = data_array[index];
+        CURRENT_TAG   = tag_array[index];
+    end
+
+    // tag matching
+    assign #0.9 TAG_MATCH = ~(tag[2]^CURRENT_TAG[2]) && ~(tag[1]^CURRENT_TAG[1]) && ~(tag[0]^CURRENT_TAG[0]);
+
+    // putting data if read access
+    always @(*)
+    begin
+        if (readaccess) // detect the idle read status
+        #1
+        begin
+            // fetching data
+            case(offset)
+                2'b00:
+                    readdata = data_array[index][7:0];
+                2'b01:
+                    readdata = data_array[index][15:8];
+                2'b10:
+                    readdata = data_array[index][23:16];
+                2'b11:
+                    readdata = data_array[index][31:24];
+            endcase
+        end
+    end
 
     //Detecting an incoming memory access
     reg readaccess, writeaccess;
@@ -123,8 +159,7 @@ module cache_memory(
             
         endcase
     end
-
-    // TODO: Delays should be corrected
+    
     // combinational output logic
     always @(*)
     begin
@@ -135,41 +170,15 @@ module cache_memory(
                 begin
                     // set main memory read and write signal to low
                     MAIN_MEM_READ = 1'b0;
-                    MAIN_MEM_WRITE = 1'b0;             
-                    
-                    #1 // loading the current values
-                    CURRENT_VALID = validBit_array[index];
-                    CURRENT_DIRTY = dirtyBit_array[index];
-                    CURRENT_DATA  = data_array[index];
-                    CURRENT_TAG   = tag_array[index];
+                    MAIN_MEM_WRITE = 1'b0;    
 
-                    #0.9
-                    if (CURRENT_TAG == tag) // tag comparisan
-                        TAG_MATCH = 1'b1;
-                    else
-                        TAG_MATCH = 1'b0;
-
-                    if (readaccess) // detect the idle read status
+                    if (readaccess && TAG_MATCH && CURRENT_VALID)
                     begin
-                        // fetching data
-                        case(offset)
-                            2'b00:
-                                tempory_data = data_array[index][7:0];
-                            2'b01:
-                                tempory_data = data_array[index][15:8];
-                            2'b10:
-                                tempory_data = data_array[index][23:16];
-                            2'b11:
-                                tempory_data = data_array[index][31:24];
-                        endcase
-                        
-                        if (TAG_MATCH && CURRENT_VALID)
-                        begin
-                            readCache = 1'b1; // set read cache memory to high
-                            readdata = tempory_data; // output the data
-                        end
-                        else readCache = 1'b0; // set the readCache signal to zero
+                        readCache = 1'b1; // set read cache memory to high
+                        //readdata = tempory_data; // output the data
                     end
+                    else readCache = 1'b0; // set the readCache signal to zero
+                    
 
                     if (writeaccess && TAG_MATCH && CURRENT_VALID) // detect the idle write status
                     begin                                               
@@ -185,14 +194,9 @@ module cache_memory(
                     MAIN_MEM_WRITE = 1'b0;
                     // set the address to teh main memory
                     MAIN_MEM_ADDRESS = {tag, index};
-                    if (!MAIN_MEM_BUSY_WAIT)    
-                    begin
-                        // put the read data to the cache
-                        data_array[index] = MAIN_MEM_READ_DATA;
-                        tag_array[index] = tag;
-                        validBit_array[index] = 1'b1; // set the valid bit after loading data
-                        dirtyBit_array[index] = 1'b0; // set the dirty bit after loading data
-                    end
+
+                    if (!MAIN_MEM_BUSY_WAIT)  writeCache_mem = 1'b1;
+                    else writeCache_mem = 1'b0; 
                 end
 
                 MEM_WRITE: 
@@ -241,6 +245,20 @@ module cache_memory(
                 state = IDLE;
                 next_state = IDLE;
             end
+    end
+
+    // writing cache after a memory read
+    always @ (posedge clock)
+    begin
+        if (writeCache_mem)
+        begin
+            #1
+            // put the read data to the cache
+            data_array[index] = MAIN_MEM_READ_DATA;
+            tag_array[index] = tag;
+            validBit_array[index] = 1'b1; // set the valid bit after loading data
+            dirtyBit_array[index] = 1'b0; // set the dirty bit after loading data
+        end
     end
 
     // to deassert and write back to the posedge
